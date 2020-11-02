@@ -1,0 +1,9 @@
+.Header {
+    background-color: #2a484c;
+    grid-area: header;
+}
+
+.Header__image {
+    width: 60px;
+    height: 60px;
+}
