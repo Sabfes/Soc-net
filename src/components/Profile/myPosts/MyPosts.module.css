@@ -1,0 +1,9 @@
+.MyPost {
+
+}
+
+.MyPost__textarea {
+    resize: none;
+    padding: 10px;
+    box-sizing: border-box;
+}

@@ -1,9 +1,14 @@
 .Header {
-    background-color: #2a484c;
+    border-bottom: 1px solid black;
     grid-area: header;
+    padding: 14px;
 }
 
-.Header__image {
-    width: 60px;
-    height: 60px;
+.Header__logo {
+    color: black;
+    font-size: 20px;
+}
+
+.Header__logo:hover {
+    cursor: pointer;
 }

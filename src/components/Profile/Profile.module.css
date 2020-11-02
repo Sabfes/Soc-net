@@ -1,9 +1,15 @@
-.Profile {
-    background-color: grey;
+.ProfileInfo {
     grid-area: content;
+    padding: 14px;
+    border-left: 1px solid lightgrey;
 }
 
-.Profile__image {
+.ProfileInfo__background {
     width: 100%;
     height: 250px;
+}
+
+.PostContainer {
+    display: flex;
+    flex-direction: column;
 }

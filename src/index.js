@@ -4,9 +4,24 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const posts = new Array(10).fill(0)
+const dialogs = [{name: 'Dima', id: 1}, {name: 'Lena', id: 2}, {name: 'Dimasol', id: 3}]
+const messages = [
+    {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '},
+    {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '},
+    {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '},
+    {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '},
+    {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '},
+    {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '}
+]
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App
+        posts={posts}
+        dialogs={dialogs}
+        messages={messages}
+    />
   </React.StrictMode>,
   document.getElementById('root')
 );
