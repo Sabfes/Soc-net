@@ -2,7 +2,8 @@ import React from 'react'
 import classes from './Dialogs.module.css'
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
-import {addNewMessageActionCreator, newMessageUpdate} from "../../redux/MessagesReducer";
+import {addNewMessageActionCreator, newMessageUpdate} from "../../redux/actions/MessagesActionCreators";
+import {connect} from "react-redux";
 
 const Dialogs = (props) => {
 
@@ -35,10 +36,10 @@ const Dialogs = (props) => {
                             className={classes.Dialogs__textarea}
                             cols="30"
                             rows="10"
-                            onChange={(e)=>props.dispatch(newMessageUpdate(e.target.value))}
+                            onChange={(e)=>props.newMessageUpdate(e.target.value)}
                         >
                         </textarea>
-                        <button onClick={()=> props.dispatch(addNewMessageActionCreator())}>Add message</button>
+                        <button onClick={()=> props.addNewMessageActionCreator()}>Add message</button>
                     </div>
                 </div>
 
@@ -47,4 +48,20 @@ const Dialogs = (props) => {
     )
 }
 
-export default Dialogs
+
+function mapStateToProps(state) {
+    return {
+        messages: state.messagesPage.messages,
+        dialogs: state.messagesPage.dialogs,
+        textAreaValue: state.messagesPage.newMessageText,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        newMessageUpdate: (text) => dispatch(newMessageUpdate(text)),
+        addNewMessageActionCreator: () => dispatch(addNewMessageActionCreator())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dialogs)
