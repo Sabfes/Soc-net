@@ -3,28 +3,35 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import store from './redux/state'
+import {BrowserRouter} from "react-router-dom";
 
-const posts = new Array(10).fill(0)
-const dialogs = [{name: 'Dima', id: 1}, {name: 'Lena', id: 2}, {name: 'Dimasol', id: 3}]
-const messages = [
-    {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '},
-    {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '},
-    {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '},
-    {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '},
-    {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '},
-    {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '}
-]
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App
-        posts={posts}
-        dialogs={dialogs}
-        messages={messages}
-    />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const rerender = (state) => {
+    ReactDOM.render(
+        <BrowserRouter>
+            <React.StrictMode>
+                <App
+                    onTextAreaChange={store.onTextAreaChange.bind(store)}
+                    addNewPost={store.addNewPost.bind(store)}
+
+                    posts={state.profilePage.posts}
+                    dialogs={state.profilePage.dialogs}
+                    textAreaValue={state.profilePage.newPostText}
+
+                    messages={state.messagesPage.messages}
+                />
+            </React.StrictMode>
+        </BrowserRouter>,
+        document.getElementById('root')
+    );
+}
+
+rerender(store.getState())
+
+store.subscribe(rerender)
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

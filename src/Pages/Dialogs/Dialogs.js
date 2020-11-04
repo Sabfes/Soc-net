@@ -4,6 +4,12 @@ import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
 
 const Dialogs = (props) => {
+    const newPostText = React.createRef()
+
+    const addNewPost = () => {
+        console.log(newPostText.current.value)
+    }
+
     return (
         <div className={classes.Dialogs}>
             <h1>Dialogs</h1>
@@ -27,7 +33,12 @@ const Dialogs = (props) => {
                         })
                     }
 
+                    <div>
+                        <textarea ref={newPostText} className={classes.Dialogs__textarea} name="" id="" cols="30" rows="10"></textarea>
+                        <button onClick={addNewPost}>Add message</button>
+                    </div>
                 </div>
+
             </div>
         </div>
     )
