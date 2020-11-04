@@ -10,7 +10,7 @@ const Profile = (props) => {
 
 
             <ProfileInfo />
-            <MyPosts textAreaValue={props.textAreaValue} onTextAreaChange={props.onTextAreaChange} addNewPost={props.addNewPost} posts={props.posts}/>
+            <MyPosts textAreaValue={props.textAreaValue} dispatch={props.dispatch} posts={props.posts}/>
         </main>
     )
 }

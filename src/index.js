@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import store from './redux/state'
+import store from './redux/store'
 import {BrowserRouter} from "react-router-dom";
 
 
@@ -12,14 +12,9 @@ const rerender = (state) => {
         <BrowserRouter>
             <React.StrictMode>
                 <App
-                    onTextAreaChange={store.onTextAreaChange.bind(store)}
-                    addNewPost={store.addNewPost.bind(store)}
+                    dispatch={store.dispatch.bind(store)}
 
-                    posts={state.profilePage.posts}
-                    dialogs={state.profilePage.dialogs}
-                    textAreaValue={state.profilePage.newPostText}
-
-                    messages={state.messagesPage.messages}
+                    state={state}
                 />
             </React.StrictMode>
         </BrowserRouter>,

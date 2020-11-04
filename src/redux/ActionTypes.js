@@ -1,0 +1,6 @@
+// ACTION TYPE
+export const NEW_POST_TEXT = 'NEW_POST_TEXT'
+export const ADD_POST = 'ADD_POST'
+
+export const ADD_MESSAGE = 'ADD_MESSAGE'
+export const NEW_MESSAGE_TEXT = 'NEW_MESSAGE_TEXT'

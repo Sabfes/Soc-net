@@ -1,13 +1,15 @@
 import React from 'react'
 import classes from './MyPosts.module.css'
 import Post from "./Post/Post";
+import {addPostActionCreator, newPostTextUpdate} from "../../../redux/ProfileReducer";
+
+
 
 const MyPosts = props => {
-
     const newPostText = React.createRef()
 
     const onChange = () => {
-        props.onTextAreaChange(newPostText.current.value)
+        props.dispatch(newPostTextUpdate(newPostText.current.value))
     }
     return (
         <div className={classes.MyPost}>
@@ -15,7 +17,7 @@ const MyPosts = props => {
 
             <div>
                 <textarea onChange={onChange} ref={newPostText} className={classes.MyPost__textarea} value={props.textAreaValue} name="" id="" cols="30" rows="10"></textarea>
-                <button onClick={props.addNewPost}>Add post</button>
+                <button onClick={() => {props.dispatch(addPostActionCreator())}}>Add post</button>
             </div>
 
             {
