@@ -23,6 +23,14 @@ const Navbar = () => {
 
             <NavLink
                 className={classes.Navbar__link}
+                to={'/users'}
+                activeClassName={classes.Navbar__linkActive}
+            >
+                Users
+            </NavLink>
+
+            <NavLink
+                className={classes.Navbar__link}
                 to={'/news'}
                 activeClassName={classes.Navbar__linkActive}
             >
