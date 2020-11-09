@@ -8,3 +8,8 @@ export const ADD_POST = 'ADD_POST'
 // MESSAGES
 export const ADD_MESSAGE = 'ADD_MESSAGE'
 export const NEW_MESSAGE_TEXT = 'NEW_MESSAGE_TEXT'
+
+// USERS
+export const SHOW_MORE_CARD = 'SHOW_MORE_CARD'
+export const FOLLOW_TOGGLE = 'FOLLOW_TOGGLE'
+export const SET_USERS = 'SET_USERS'
