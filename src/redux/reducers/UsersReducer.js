@@ -1,18 +1,16 @@
 // import {} from "../actions/ActionTypes";
 
-import {FOLLOW_TOGGLE, SET_USERS, SHOW_MORE_CARD} from "../actions/ActionTypes";
+import {CHANGE_CURRENT_PAGE, FOLLOW_TOGGLE, SET_USERS, SET_USERS_TOTAL_COUNT} from "../actions/ActionTypes";
 
 const initialState = {
     users: [],
-    showUsers: 4,
+    pageSize: 100,
+    totalUsersCount: 0,
+    currentPage: 4,
 }
 
 const UsersReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SHOW_MORE_CARD:
-            return {
-                ...state, showUsers: state.showUsers + 2,
-            }
         case FOLLOW_TOGGLE:
             return {
                 ...state, users: state.users.map( (item) => {
@@ -25,6 +23,14 @@ const UsersReducer = (state = initialState, action) => {
         case SET_USERS:
             return {
                 ...state, users: action.users
+            }
+        case CHANGE_CURRENT_PAGE:
+            return {
+                ...state, currentPage: action.id,
+            }
+        case SET_USERS_TOTAL_COUNT:
+            return {
+                ...state, totalUsersCount: action.count,
             }
         default:
             return state

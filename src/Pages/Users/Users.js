@@ -2,40 +2,52 @@ import React, {Component} from 'react';
 import classes from './Users.module.css'
 import {connect} from "react-redux";
 import UserCard from "./User/UserCard";
-import {showMoreCard, followToggle, setUsers} from "../../redux/actions/UsersActionCreators";
+import {changeCurrentPage, followToggle, setTotalUsersCount, setUsers} from "../../redux/actions/UsersActionCreators";
 import axios from 'axios'
 
 class Users extends Component {
-    state = {
-        getUsers: false,
-    }
 
-    getUsers = () => {
-        if (this.props.users.length === 0)  {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users')
-                .then(res => {
-                    console.log(res.data.items[0])
-                    this.props.setUsers(res.data.items)
-                })
-                .catch(e => {
-                    console.log(e)
-                })
-            this.setState({getUsers: !this.state.getUsers})
-        }
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then(res => {
+                this.props.setUsers(res.data.items)
+                this.props.setTotalUsersCount(res.data.totalCount)
+            })
+            .catch(e => {
+                console.log(e)
+            })
     }
-
+    changePage = (e) => {
+        this.props.changeCurrentPage(+e.target.id)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${+e.target.id}&count=${this.props.pageSize}`)
+            .then(res => {
+                this.props.setUsers(res.data.items)
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    }
     render() {
+
+        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
+
+        let pages = []
+        for (let i=1; i<=pagesCount; i++) {
+            pages.push(i)
+        }
         return (
             <div className={classes.Users}>
                 <h1>users</h1>
 
+                <div className={classes.Users__pagination}>
+                    {pages.map( (i, k)=> {
+                        return <span key={k} id={i} onClick={this.changePage} className={this.props.currentPage === i ? classes.selectedPage : classes.Users__paginationItem} >{i}</span>
+                    })}
+                </div>
+
                 <div className={classes.Users__container}>
                     {
-                        this.state.getUsers === false ? <button onClick={this.getUsers}>get users</button> : null
-                    }
-                    {
                         this.props.users.map( (u,i)=>{
-                            if (i<this.props.showUsers) {
                                 return (<UserCard
                                     key={i}
                                     id={u.id}
@@ -45,15 +57,9 @@ class Users extends Component {
                                     imgUrl={u.photos.small}
                                     onClick={this.props.followToggle}
                                 />)
-                            } else {
-                                return null
-                            }
-
                         })
                     }
                 </div>
-
-                <button className={classes.Users__button} onClick={this.props.showMoreCard}>Show more</button>
             </div>
         )
     }
@@ -65,15 +71,18 @@ class Users extends Component {
 function mapStateToProps(state) {
     return {
         users: state.usersPage.users,
-        showUsers: state.usersPage.showUsers,
+        pageSize: state.usersPage.pageSize,
+        totalUsersCount: state.usersPage.totalUsersCount,
+        currentPage: state.usersPage.currentPage,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        showMoreCard: () => dispatch(showMoreCard()),
         followToggle: (e) => dispatch(followToggle(e.target.id)),
         setUsers: (users) => dispatch(setUsers(users)),
+        changeCurrentPage: (id) => dispatch(changeCurrentPage(id)),
+        setTotalUsersCount: (count) => dispatch(setTotalUsersCount(count))
     }
 }
 

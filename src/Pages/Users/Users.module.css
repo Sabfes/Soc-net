@@ -22,3 +22,21 @@
 .Users__container {
     width: 80%;
 }
+
+.selectedPage {
+    color: red;
+    cursor: pointer;
+    font-size: 26px;
+    margin-right: 5px;
+}
+
+.Users__pagination{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 50px;
+}
+.Users__paginationItem {
+    margin-right: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
