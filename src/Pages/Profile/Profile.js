@@ -4,20 +4,51 @@ import MyPosts from "./myPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {connect} from "react-redux";
 import {addPost, newPostTextUpdate} from "../../redux/actions/ProfileActionCreators";
+import axios from "axios";
+import {withRouter} from "react-router-dom";
 
-const Profile = (props) => {
+class Profile extends React.Component {
+    constructor(props) {
+        super(props);
 
-    const onChangeHandler = (text) => {
-        props.newPostTextUpdate(text)
+        this.state = {
+            profileInfo: {
+                photos: {
+                    small: 'https://hostinpl.ru/templates/hos7ru/dleimages/noavatar.png',
+                },
+                aboutMe: 'description',
+            },
+        }
     }
-    return (
-        <main className={classes.ProfileInfo}>
-            <img className={classes.ProfileInfo__background} src="https://coolwallpapers.me/picsup/5595676-black-white-wallpapers.jpg" alt=""/>
 
-            <ProfileInfo />
-            <MyPosts textAreaValue={props.textAreaValue} onClick={props.addPost} onChange={onChangeHandler} posts={props.posts}/>
-        </main>
-    )
+    componentDidMount() {
+        let userId = this.props.match.params.id
+        if (!userId) {
+            userId = '';
+        }
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
+            .then(res => {
+                this.setState({profileInfo: {...res.data}})
+            })
+            .catch(e => {
+                console.log(e)
+            })
+    }
+
+    onChangeHandler = (text) => {
+        this.props.newPostTextUpdate(text)
+    }
+
+    render() {
+        return (
+            <main className={classes.ProfileInfo}>
+                <img className={classes.ProfileInfo__background} src="https://coolwallpapers.me/picsup/5595676-black-white-wallpapers.jpg" alt=""/>
+
+                <ProfileInfo avatarImg={this.state.profileInfo.photos.small} desc={this.state.profileInfo.aboutMe}/>
+                <MyPosts textAreaValue={this.props.textAreaValue} onClick={this.props.addPost} onChange={this.onChangeHandler} posts={this.props.posts}/>
+            </main>
+        )
+    }
 }
 
 function mapStateToProps(state) {
@@ -34,4 +65,5 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+const ProfilePage = withRouter(Profile)
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage)

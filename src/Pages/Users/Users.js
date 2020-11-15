@@ -6,27 +6,47 @@ import {changeCurrentPage, followToggle, setTotalUsersCount, setUsers} from "../
 import axios from 'axios'
 
 class Users extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isFetch: false,
+        }
+    }
 
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        this.setState({isFetch:!this.state.isFetch})
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+            withCredentials: true,
+        })
             .then(res => {
                 this.props.setUsers(res.data.items)
                 this.props.setTotalUsersCount(res.data.totalCount)
+                this.setState({isFetch:!this.state.isFetch})
             })
             .catch(e => {
+                this.setState({isFetch:!this.state.isFetch})
                 console.log(e)
             })
     }
+
     changePage = (e) => {
         this.props.changeCurrentPage(+e.target.id)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${+e.target.id}&count=${this.props.pageSize}`)
+
+        this.setState({isFetch:!this.state.isFetch})
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${+e.target.id}&count=${this.props.pageSize}`,{
+            withCredentials: true,
+        })
             .then(res => {
                 this.props.setUsers(res.data.items)
+                this.setState({isFetch:!this.state.isFetch})
             })
             .catch(e => {
                 console.log(e)
+                this.setState({isFetch:!this.state.isFetch})
             })
     }
+
     render() {
 
         let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
@@ -47,7 +67,12 @@ class Users extends Component {
 
                 <div className={classes.Users__container}>
                     {
-                        this.props.users.map( (u,i)=>{
+                        this.state.isFetch ? <div className={classes.ldsEllipsis}><div></div><div></div><div></div><div></div></div> : null
+                    }
+                    {
+                        this.state.isFetch
+                            ? null
+                            : this.props.users.map( (u,i)=>{
                                 return (<UserCard
                                     key={i}
                                     id={u.id}
@@ -79,7 +104,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        followToggle: (e) => dispatch(followToggle(e.target.id)),
+        followToggle: (id) => dispatch(followToggle(id)),
         setUsers: (users) => dispatch(setUsers(users)),
         changeCurrentPage: (id) => dispatch(changeCurrentPage(id)),
         setTotalUsersCount: (count) => dispatch(setTotalUsersCount(count))
