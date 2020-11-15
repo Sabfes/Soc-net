@@ -3,7 +3,7 @@ import classes from './Users.module.css'
 import {connect} from "react-redux";
 import UserCard from "./User/UserCard";
 import {changeCurrentPage, followToggle, setTotalUsersCount, setUsers} from "../../redux/actions/UsersActionCreators";
-import axios from 'axios'
+import {getUsers} from "../../api/api";
 
 class Users extends Component {
     constructor(props) {
@@ -11,15 +11,25 @@ class Users extends Component {
 
         this.state = {
             isFetch: false,
+            followFetchingId: []
         }
     }
 
+    followFetchingToggle = (id) => {
+        const prevArray = this.state.followFetchingId
+        if (prevArray.indexOf( +id ) === -1) {
+            this.setState({followFetchingId: [...this.state.followFetchingId, id]})
+        } else {
+            this.setState({followFetchingId: [...this.state.followFetchingId.filter( i => i !== id)]})
+        }
+
+    }
+
     componentDidMount() {
+        // отображение лоадера
         this.setState({isFetch:!this.state.isFetch})
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-            withCredentials: true,
-        })
-            .then(res => {
+
+        getUsers(this.props).then(res => {
                 this.props.setUsers(res.data.items)
                 this.props.setTotalUsersCount(res.data.totalCount)
                 this.setState({isFetch:!this.state.isFetch})
@@ -34,10 +44,7 @@ class Users extends Component {
         this.props.changeCurrentPage(+e.target.id)
 
         this.setState({isFetch:!this.state.isFetch})
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${+e.target.id}&count=${this.props.pageSize}`,{
-            withCredentials: true,
-        })
-            .then(res => {
+        getUsers(this.props).then(res => {
                 this.props.setUsers(res.data.items)
                 this.setState({isFetch:!this.state.isFetch})
             })
@@ -48,7 +55,6 @@ class Users extends Component {
     }
 
     render() {
-
         let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
 
         let pages = []
@@ -81,6 +87,8 @@ class Users extends Component {
                                     isFollow={u.followed}
                                     imgUrl={u.photos.small}
                                     onClick={this.props.followToggle}
+                                    btnDisabled={this.state.followFetchingId}
+                                    btnFollowClick={this.followFetchingToggle}
                                 />)
                         })
                     }

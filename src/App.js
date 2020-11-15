@@ -14,7 +14,7 @@ function App() {
     <div className="App-wrapper">
         <HeaderContainer />
         <Navbar />
-        <Route path={'/profile/:id?'} exact render={()=> <Profile/>} />
+        <Route path={'/profile/:id?'} exact={true} render={()=> <Profile/>} />
         <Route path={'/dialogs'} render={()=> <Dialogs/>} />
         <Route path={'/users'} render={()=> <Users />} />
         <Route path={'/news'} component={News} />

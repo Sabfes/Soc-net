@@ -13,17 +13,19 @@ const UserCard = props => {
                 {
                     props.isFollow
                         ? <button
+                            disabled={props.btnDisabled.some(i => i=== props.id) ? true : false}
                             id={props.id}
                             onClick={() => {
+                                props.btnFollowClick(props.id)
                                 axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${props.id}`, {
                                     withCredentials: true,
                                     headers: {
                                         "API-KEY": "71a0323c-7ff9-4763-8740-70e9a845b5eb",
                                     }
-                                })
-                                    .then(res => {
+                                }).then(res => {
                                         if (res.data.resultCode === 0) {
                                             props.onClick(props.id)
+                                            props.btnFollowClick(props.id)
                                         }
                                     })
                             }}
@@ -32,17 +34,19 @@ const UserCard = props => {
                             {"UNFOLLOW"}
                         </button>
                         : <button
+                            disabled={props.btnDisabled.some(i => i=== props.id) ? true : false}
                             id={props.id}
                             onClick={() => {
+                                props.btnFollowClick(props.id)
                                 axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${props.id}`, {}, {
                                     withCredentials: true,
                                     headers: {
                                         "API-KEY": "71a0323c-7ff9-4763-8740-70e9a845b5eb",
                                     }
-                                })
-                                    .then(res => {
+                                }).then(res => {
                                         if (res.data.resultCode === 0) {
                                             props.onClick(props.id)
+                                            props.btnFollowClick(props.id)
                                         }
                                     })
                             }}
