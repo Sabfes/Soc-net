@@ -4,8 +4,8 @@ import MyPosts from "./myPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {connect} from "react-redux";
 import {addPost, newPostTextUpdate} from "../../redux/actions/ProfileActionCreators";
-import axios from "axios";
 import {withRouter} from "react-router-dom";
+import {getProfile} from "../../api/api";
 
 class Profile extends React.Component {
     constructor(props) {
@@ -26,14 +26,15 @@ class Profile extends React.Component {
         if (!userId) {
             userId = '';
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-            .then(res => {
+
+        getProfile(userId).then(res => {
                 this.setState({profileInfo: {...res.data}})
             })
             .catch(e => {
                 console.log(e)
             })
     }
+
 
     onChangeHandler = (text) => {
         this.props.newPostTextUpdate(text)

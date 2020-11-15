@@ -12,6 +12,10 @@
     color: black;
     background: white;
 }
+.UserCard__button:disabled {
+    border: 1px solid red;
+    cursor: wait;
+}
 
 .UserCard__avatar {
     width: 40px;
