@@ -1,4 +1,6 @@
 .Header {
+    display: flex;
+    justify-content: space-between;
     border-bottom: 1px solid black;
     grid-area: header;
     padding: 14px;
@@ -11,4 +13,9 @@
 
 .Header__logo:hover {
     cursor: pointer;
+}
+
+.Header__login {
+    text-decoration: none;
+    color: black;
 }

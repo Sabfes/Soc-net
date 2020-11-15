@@ -1,5 +1,4 @@
 import './App.css';
-import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./Pages/Profile/Profile";
 import Dialogs from "./Pages/Dialogs/Dialogs";
@@ -8,13 +7,14 @@ import News from "./Pages/News/News";
 import Music from "./Pages/Music/Music";
 import Settings from "./Pages/Settings/Settings";
 import Users from "./Pages/Users/Users";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 function App() {
   return (
     <div className="App-wrapper">
-        <Header />
+        <HeaderContainer />
         <Navbar />
-        <Route path={'/profile'} render={()=> <Profile/>} />
+        <Route path={'/profile/:id?'} exact render={()=> <Profile/>} />
         <Route path={'/dialogs'} render={()=> <Dialogs/>} />
         <Route path={'/users'} render={()=> <Users />} />
         <Route path={'/news'} component={News} />
