@@ -1,12 +1,18 @@
-// import {} from "../actions/ActionTypes";
-
-import {CHANGE_CURRENT_PAGE, FOLLOW_TOGGLE, SET_USERS, SET_USERS_TOTAL_COUNT} from "../actions/ActionTypes";
+import {
+    CHANGE_CURRENT_PAGE, FOLLOW_FETCHING_TOGGLE,
+    FOLLOW_TOGGLE,
+    IS_FETCH_TOGGLE,
+    SET_USERS,
+    SET_USERS_TOTAL_COUNT
+} from "../actions/ActionTypes";
 
 const initialState = {
     users: [],
     pageSize: 100,
     totalUsersCount: 0,
     currentPage: 1,
+    isFetch: false,
+    followFetchingId: [],
 }
 
 const UsersReducer = (state = initialState, action) => {
@@ -32,10 +38,26 @@ const UsersReducer = (state = initialState, action) => {
             return {
                 ...state, totalUsersCount: action.count,
             }
+        case IS_FETCH_TOGGLE:
+            return {
+                ...state, isFetch: action.bool,
+            }
+        case FOLLOW_FETCHING_TOGGLE:
+            const prevArray = state.followFetchingId
+            let res
+            if (prevArray.indexOf( +action.id ) === -1) {
+                res = [...state.followFetchingId, action.id]
+            } else {
+                res = [...state.followFetchingId.filter( i => i !== action.id)]
+            }
+            return {
+                ...state, followFetchingId: res,
+            }
         default:
             return state
     }
 }
 
 export default UsersReducer
+
 
