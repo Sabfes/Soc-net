@@ -1,7 +1,6 @@
 import React from 'react'
 import classes from './UserCard.module.css'
 import {NavLink} from "react-router-dom";
-import axios from "axios";
 
 const UserCard = props => {
     return (
@@ -15,20 +14,7 @@ const UserCard = props => {
                         ? <button
                             disabled={props.btnDisabled.some(i => i=== props.id) ? true : false}
                             id={props.id}
-                            onClick={() => {
-                                props.btnFollowClick(props.id)
-                                axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${props.id}`, {
-                                    withCredentials: true,
-                                    headers: {
-                                        "API-KEY": "71a0323c-7ff9-4763-8740-70e9a845b5eb",
-                                    }
-                                }).then(res => {
-                                        if (res.data.resultCode === 0) {
-                                            props.onClick(props.id)
-                                            props.btnFollowClick(props.id)
-                                        }
-                                    })
-                            }}
+                            onClick={() => {props.unFollow(props.id)}}
                             className={classes.UserCard__button}
                         >
                             {"UNFOLLOW"}
@@ -36,20 +22,7 @@ const UserCard = props => {
                         : <button
                             disabled={props.btnDisabled.some(i => i=== props.id) ? true : false}
                             id={props.id}
-                            onClick={() => {
-                                props.btnFollowClick(props.id)
-                                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${props.id}`, {}, {
-                                    withCredentials: true,
-                                    headers: {
-                                        "API-KEY": "71a0323c-7ff9-4763-8740-70e9a845b5eb",
-                                    }
-                                }).then(res => {
-                                        if (res.data.resultCode === 0) {
-                                            props.onClick(props.id)
-                                            props.btnFollowClick(props.id)
-                                        }
-                                    })
-                            }}
+                            onClick={() => {props.follow(props.id)}}
                             className={classes.UserCard__button}
                         >
                             {"FOLLOW"}

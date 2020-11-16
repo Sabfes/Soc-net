@@ -2,56 +2,21 @@ import React, {Component} from 'react';
 import classes from './Users.module.css'
 import {connect} from "react-redux";
 import UserCard from "./User/UserCard";
-import {changeCurrentPage, followToggle, setTotalUsersCount, setUsers} from "../../redux/actions/UsersActionCreators";
-import {getUsers} from "../../api/api";
+import {
+    changeCurrentPage, follow, followFetchingToggle,
+    followToggle, getUsers, unFollow,
+
+} from "../../redux/actions/UsersActionCreators";
 
 class Users extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            isFetch: false,
-            followFetchingId: []
-        }
-    }
-
-    followFetchingToggle = (id) => {
-        const prevArray = this.state.followFetchingId
-        if (prevArray.indexOf( +id ) === -1) {
-            this.setState({followFetchingId: [...this.state.followFetchingId, id]})
-        } else {
-            this.setState({followFetchingId: [...this.state.followFetchingId.filter( i => i !== id)]})
-        }
-
-    }
 
     componentDidMount() {
-        // отображение лоадера
-        this.setState({isFetch:!this.state.isFetch})
-
-        getUsers(this.props).then(res => {
-                this.props.setUsers(res.data.items)
-                this.props.setTotalUsersCount(res.data.totalCount)
-                this.setState({isFetch:!this.state.isFetch})
-            })
-            .catch(e => {
-                this.setState({isFetch:!this.state.isFetch})
-                console.log(e)
-            })
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     changePage = (e) => {
         this.props.changeCurrentPage(+e.target.id)
-
-        this.setState({isFetch:!this.state.isFetch})
-        getUsers(this.props).then(res => {
-                this.props.setUsers(res.data.items)
-                this.setState({isFetch:!this.state.isFetch})
-            })
-            .catch(e => {
-                console.log(e)
-                this.setState({isFetch:!this.state.isFetch})
-            })
+        this.props.getUsers(+e.target.id, this.props.pageSize)
     }
 
     render() {
@@ -61,6 +26,7 @@ class Users extends Component {
         for (let i=1; i<=pagesCount; i++) {
             pages.push(i)
         }
+
         return (
             <div className={classes.Users}>
                 <h1>users</h1>
@@ -73,10 +39,10 @@ class Users extends Component {
 
                 <div className={classes.Users__container}>
                     {
-                        this.state.isFetch ? <div className={classes.ldsEllipsis}><div></div><div></div><div></div><div></div></div> : null
+                        this.props.isFetch ? <div className={classes.ldsEllipsis}><div></div><div></div><div></div><div></div></div> : null
                     }
                     {
-                        this.state.isFetch
+                        this.props.isFetch
                             ? null
                             : this.props.users.map( (u,i)=>{
                                 return (<UserCard
@@ -86,9 +52,9 @@ class Users extends Component {
                                     status={u.status}
                                     isFollow={u.followed}
                                     imgUrl={u.photos.small}
-                                    onClick={this.props.followToggle}
-                                    btnDisabled={this.state.followFetchingId}
-                                    btnFollowClick={this.followFetchingToggle}
+                                    btnDisabled={this.props.followFetchingId}
+                                    follow={this.props.follow}
+                                    unFollow={this.props.unFollow}
                                 />)
                         })
                     }
@@ -107,15 +73,19 @@ function mapStateToProps(state) {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
+        isFetch: state.usersPage.isFetch,
+        followFetchingId: state.usersPage.followFetchingId,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         followToggle: (id) => dispatch(followToggle(id)),
-        setUsers: (users) => dispatch(setUsers(users)),
         changeCurrentPage: (id) => dispatch(changeCurrentPage(id)),
-        setTotalUsersCount: (count) => dispatch(setTotalUsersCount(count))
+        getUsers: (currentPage, pageSize) => dispatch(getUsers(currentPage, pageSize)),
+        followFetchingToggle: (id) => dispatch(followFetchingToggle(id)),
+        follow: (id) => dispatch(follow(id)),
+        unFollow: (id) => dispatch(unFollow(id)),
     }
 }
 
