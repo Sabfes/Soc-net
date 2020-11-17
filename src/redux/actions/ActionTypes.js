@@ -4,6 +4,7 @@
 export const NEW_POST_TEXT = 'NEW_POST_TEXT'
 export const ADD_POST = 'ADD_POST'
 export const SET_PROFILE_INFO = 'SET_PROFILE_INFO'
+export const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS'
 
 
 // MESSAGES

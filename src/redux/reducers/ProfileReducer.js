@@ -1,18 +1,20 @@
-import {ADD_POST, NEW_POST_TEXT, SET_PROFILE_INFO} from "../actions/ActionTypes";
+import {ADD_POST, NEW_POST_TEXT, SET_PROFILE_INFO, SET_PROFILE_STATUS} from "../actions/ActionTypes";
 
 const initialState = {
     posts: [{id: 1, text: 'id1 text'},{id: 2, text: 'id2 text'}],
     newPostText: '',
     profileInfo: {
-        photos: {
-            small: 'https://hostinpl.ru/templates/hos7ru/dleimages/noavatar.png',
-        },
-        aboutMe: 'description',
+        img: ''
     },
+    status: '',
 }
 
 const ProfileReducer = (state = initialState, action) => {
     switch (action.type) {
+        case SET_PROFILE_STATUS:
+            return {
+                ...state, status: action.status,
+            }
         case ADD_POST:
             if (state.newPostText === '') {
                 console.log('0 value')
@@ -27,9 +29,8 @@ const ProfileReducer = (state = initialState, action) => {
                 ...state, newPostText: action.text
             }
         case SET_PROFILE_INFO:
-            console.log(action)
             return {
-                ...state, profileInfo: action.data,
+                ...state, profileInfo: {...action.data, img: action.data.photos.small},
             }
         default:
             return state
