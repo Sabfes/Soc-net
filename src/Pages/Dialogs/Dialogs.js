@@ -4,8 +4,13 @@ import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
 import {addNewMessageActionCreator, newMessageUpdate} from "../../redux/actions/MessagesActionCreators";
 import {connect} from "react-redux";
+import {Redirect} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 const Dialogs = (props) => {
+
+    if (!props.isAuth) return <Redirect to={'/login'} />
 
     return (
         <div className={classes.Dialogs}>
@@ -64,4 +69,7 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect,
+)(Dialogs)

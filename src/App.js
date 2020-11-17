@@ -8,6 +8,7 @@ import Music from "./Pages/Music/Music";
 import Settings from "./Pages/Settings/Settings";
 import Users from "./Pages/Users/Users";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Login from "./Pages/Login/Login";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path={'/news'} component={News} />
         <Route path={'/music'} component={Music} />
         <Route path={'/settings'} component={Settings} />
+        <Route path={'/login'} component={Login} />
     </div>
   );
 }

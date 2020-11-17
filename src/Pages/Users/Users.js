@@ -7,6 +7,7 @@ import {
     followToggle, getUsers, unFollow,
 
 } from "../../redux/actions/UsersActionCreators";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 class Users extends Component {
 
@@ -89,7 +90,7 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users)
+export default connect(mapStateToProps, mapDispatchToProps)(withAuthRedirect(Users))
 
 
 

@@ -14,4 +14,6 @@ export const userApi = {
     getAuth: ()=> {return instance.get('auth/me')},
     follow: (userId) => {return instance.post(`follow/${userId}`)},
     unFollow: (userId) => {return instance.delete(`follow/${userId}`)},
+    getProfileStatus: (userId) => {return instance.get(`profile/status/${userId}`)},
+    updateProfileStatus: (status) => {return instance.put(`profile/status`,{status})},
 }
