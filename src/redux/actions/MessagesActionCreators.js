@@ -1,14 +1,7 @@
-import {ADD_MESSAGE, NEW_MESSAGE_TEXT} from "./ActionTypes";
+import {ADD_MESSAGE} from "./ActionTypes";
 
-export const addNewMessageActionCreator = () => {
+export const addNewMessageActionCreator = (message) => {
     return {
-        type: ADD_MESSAGE,
-    }
-}
-
-
-export const newMessageUpdate = (text) => {
-    return {
-        type: NEW_MESSAGE_TEXT, text
+        type: ADD_MESSAGE, message,
     }
 }

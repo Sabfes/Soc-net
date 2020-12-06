@@ -1,4 +1,4 @@
-import {IS_AUTH_TOGGLE, SET_USER_DATA} from "../actions/ActionTypes";
+import {SET_USER_DATA} from "../actions/ActionTypes";
 
 const initialState = {
     userId: null,
@@ -12,11 +12,7 @@ const AuthReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
-                ...state, ...action.data
-            }
-        case IS_AUTH_TOGGLE:
-            return {
-                ...state, isAuth: action.isAuth,
+                ...state, ...action.data, isAuth: action.data.isAuth,
             }
         default:
             return state

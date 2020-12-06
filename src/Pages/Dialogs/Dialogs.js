@@ -2,13 +2,18 @@ import React from 'react'
 import classes from './Dialogs.module.css'
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
-import {addNewMessageActionCreator, newMessageUpdate} from "../../redux/actions/MessagesActionCreators";
+import {addNewMessageActionCreator} from "../../redux/actions/MessagesActionCreators";
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {AddMsgFormRedux} from "./MsgFormRedux/MsgFormRedux";
 
 const Dialogs = (props) => {
+
+    const addNewMsg = (s) => {
+        props.addNewMessageActionCreator(s.newMsg)
+    }
 
     if (!props.isAuth) return <Redirect to={'/login'} />
 
@@ -35,17 +40,7 @@ const Dialogs = (props) => {
                         })
                     }
 
-                    <div>
-                        <textarea
-                            value={props.textAreaValue}
-                            className={classes.Dialogs__textarea}
-                            cols="30"
-                            rows="10"
-                            onChange={(e)=>props.newMessageUpdate(e.target.value)}
-                        >
-                        </textarea>
-                        <button onClick={()=> props.addNewMessageActionCreator()}>Add message</button>
-                    </div>
+                    <AddMsgFormRedux onSubmit={addNewMsg}/>
                 </div>
 
             </div>
@@ -58,14 +53,12 @@ function mapStateToProps(state) {
     return {
         messages: state.messagesPage.messages,
         dialogs: state.messagesPage.dialogs,
-        textAreaValue: state.messagesPage.newMessageText,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        newMessageUpdate: (text) => dispatch(newMessageUpdate(text)),
-        addNewMessageActionCreator: () => dispatch(addNewMessageActionCreator())
+        addNewMessageActionCreator: (message) => dispatch(addNewMessageActionCreator(message))
     }
 }
 
