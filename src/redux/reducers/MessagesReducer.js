@@ -1,4 +1,4 @@
-import {ADD_MESSAGE, NEW_MESSAGE_TEXT} from "../actions/ActionTypes";
+import {ADD_MESSAGE} from "../actions/ActionTypes";
 
 const initialState = {
     dialogs: [{name: 'Dima', id: 1}, {name: 'Lena', id: 2}, {name: 'Dimasol', id: 3}],
@@ -6,7 +6,6 @@ const initialState = {
         {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '},
         {name: 'Dima', text: 'test steasd asd;ask asdkjl Asdj '},
     ],
-    newMessageText: '',
 }
 
 
@@ -15,15 +14,12 @@ const MessagesReducer = (state = initialState, action) => {
         case ADD_MESSAGE:
             const msg = {
                 name: 'Dima',
-                text: state.newMessageText
+                text: action.message
             }
-            state.messages.push(msg)
+            const msgs = [...state.messages]
+            msgs.push(msg)
             return {
-                ...state, newMessageText: ''
-            }
-        case NEW_MESSAGE_TEXT:
-            return {
-                ...state, newMessageText: action.text,
+                ...state, messages: msgs ,newMessageText: ''
             }
         default:
             return state

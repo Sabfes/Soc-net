@@ -10,16 +10,17 @@ import {
     newPostTextUpdate,
     updateProfileStatus
 } from "../../redux/actions/ProfileActionCreators";
-import {withRouter} from "react-router-dom";
-// import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {Redirect, withRouter} from "react-router-dom";
 import {compose} from "redux";
 
 class Profile extends React.Component {
 
     componentDidMount() {
+        if (!this.props.isAuth) return <Redirect to={'/login'} />
+
         let userId = this.props.match.params.id
         if (!userId) {
-            userId = '';
+            userId = this.props.userId;
         }
         this.props.getProfile(userId)
         this.props.getProfileStatus(userId)
@@ -27,10 +28,11 @@ class Profile extends React.Component {
 
 
     onChangeHandler = (text) => {
-        this.props.newPostTextUpdate(text)
+        this.props.addPost(text.newPostText)
     }
 
     render() {
+        if (!this.props.isAuth) return <Redirect to={'/login'} />
         return (
             <main className={classes.ProfileInfo}>
                 <ProfileInfo
@@ -39,7 +41,6 @@ class Profile extends React.Component {
                     desc={this.props.status}
                 />
                 <MyPosts
-                    textAreaValue={this.props.textAreaValue}
                     onClick={this.props.addPost}
                     onChange={this.onChangeHandler}
                     posts={this.props.posts}
@@ -54,23 +55,14 @@ class Profile extends React.Component {
 function mapStateToProps(state) {
     return {
         posts: state.profilePage.posts,
-        textAreaValue: state.profilePage.newPostText,
         profileInfo: state.profilePage.profileInfo,
         status: state.profilePage.status,
+        isAuth: state.auth.isAuth,
+        userId: state.auth.userId,
     }
 }
 
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         newPostTextUpdate: text => dispatch(newPostTextUpdate(text)),
-//         addPost: () => dispatch(addPost()),
-//         getProfile: (id) => dispatch(getProfile(id)),
-//         updateProfileStatus: (status) => dispatch(updateProfileStatus(status)),
-//     }
-// }
-
 export default compose(
-    // withAuthRedirect,
     withRouter,
     connect(mapStateToProps, {
         newPostTextUpdate,

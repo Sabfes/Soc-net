@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Header from "./Header";
 import {connect} from "react-redux";
-import {authMe, isAuthToggle, setAuthUserData} from "../../redux/actions/AuthActionCreators";
+import {authMe, logoutUser, setAuthUserData} from "../../redux/actions/AuthActionCreators";
 
 class HeaderContainer extends Component {
 
@@ -26,8 +26,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setAuthUserData: (userId, email, login) => dispatch(setAuthUserData(userId, email, login)),
-        isAuthToggle: isAuth => dispatch(isAuthToggle(isAuth)),
-        authMe: () => dispatch(authMe),
+        authMe: () => dispatch(authMe()),
+        logoutUser: () => dispatch(logoutUser())
     }
 }
 

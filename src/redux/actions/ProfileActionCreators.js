@@ -3,9 +3,9 @@ import {userApi} from "../../api/api";
 
 // ACTION CREATORS
 
-export const addPost = () => {
+export const addPost = (text) => {
     return {
-        type: ADD_POST,
+        type: ADD_POST, text
     }
 }
 
@@ -31,7 +31,6 @@ export const setProfileStatus = status => {
 // THUNK CREATORS
 
 export const getProfile = (userId) => (dispatch) => {
-    console.log(userId)
     userApi.getProfile(userId).then(res => {
         dispatch(setProfileInfo(res.data))
     })
@@ -39,7 +38,6 @@ export const getProfile = (userId) => (dispatch) => {
 
 export const getProfileStatus = userId => dispatch => {
     userApi.getProfileStatus(userId).then(res => {
-        console.log('RESSS',res)
         dispatch(setProfileStatus(res.data))
     })
 }

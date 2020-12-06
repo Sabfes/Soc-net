@@ -1,23 +1,14 @@
 import React from 'react'
 import classes from './MyPosts.module.css'
 import Post from "./Post/Post";
+import {NewPostReduxForm} from "./PostReduxForm/PostReduxForm";
 
 const MyPosts = props => {
     return (
         <div className={classes.MyPost}>
             <h1>My posts</h1>
 
-            <div>
-                <textarea
-                    onChange={(e) => props.onChange(e.target.value)}
-                    className={classes.MyPost__textarea}
-                    value={props.textAreaValue}
-                    cols="30"
-                    rows="10"
-                >
-                </textarea>
-                <button onClick={props.onClick}>Add post</button>
-            </div>
+            <NewPostReduxForm onSubmit={props.onChange}/>
 
             {
                 props.posts.map( (post, i) => {
