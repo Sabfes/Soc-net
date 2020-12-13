@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App-wrapper">
         <HeaderContainer />
-        <Navbar />
+        <Navbar />g
         <Route path={'/profile/:id?'} exact={true} render={()=> <Profile/>} />
         <Route path={'/dialogs'} render={()=> <Dialogs/>} />
         <Route path={'/users'} render={()=> <Users />} />
