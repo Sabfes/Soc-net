@@ -8,6 +8,7 @@ import {
 
 } from "../../redux/actions/UsersActionCreators";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import Loader from "../../components/Loader/Loader";
 
 class Users extends Component {
 
@@ -40,7 +41,7 @@ class Users extends Component {
 
                 <div className={classes.Users__container}>
                     {
-                        this.props.isFetch ? <div className={classes.ldsEllipsis}><div></div><div></div><div></div><div></div></div> : null
+                        this.props.isFetch ? <Loader /> : null
                     }
                     {
                         this.props.isFetch
