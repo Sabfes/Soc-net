@@ -21,6 +21,9 @@ class Profile extends React.Component {
         let userId = this.props.match.params.id
         if (!userId) {
             userId = this.props.userId;
+            if (!userId) {
+                this.props.history.push('/login ')
+            }
         }
         this.props.getProfile(userId)
         this.props.getProfileStatus(userId)

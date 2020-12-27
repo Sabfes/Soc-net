@@ -13,7 +13,6 @@ export const setAuthUserData = (userId, email, login, isAuth) => {
 export const authMe = () => (dispatch) => {
     userApi.getAuth()
         .then(res => {
-        console.log(res)
             if (res.data.resultCode === 0) {
                 let {id, login, email} = res.data.data
                 dispatch(setAuthUserData(id, email, login, true))
