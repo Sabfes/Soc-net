@@ -4,21 +4,21 @@ import {connect} from "react-redux";
 import UserCard from "./User/UserCard";
 import {
     changeCurrentPage, follow, followFetchingToggle,
-    followToggle, getUsers, unFollow,
-
+    followToggle, requestUsers, unFollow,
 } from "../../redux/actions/UsersActionCreators";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import Loader from "../../components/Loader/Loader";
 
+
 class Users extends Component {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        this.props.requestUsers(this.props.currentPage, this.props.pageSize)
     }
 
     changePage = (e) => {
         this.props.changeCurrentPage(+e.target.id)
-        this.props.getUsers(+e.target.id, this.props.pageSize)
+        this.props.requestUsers(+e.target.id, this.props.pageSize)
     }
 
     render() {
@@ -66,9 +66,6 @@ class Users extends Component {
     }
 }
 
-
-
-
 function mapStateToProps(state) {
     return {
         users: state.usersPage.users,
@@ -80,11 +77,12 @@ function mapStateToProps(state) {
     }
 }
 
+
 function mapDispatchToProps(dispatch) {
     return {
         followToggle: (id) => dispatch(followToggle(id)),
         changeCurrentPage: (id) => dispatch(changeCurrentPage(id)),
-        getUsers: (currentPage, pageSize) => dispatch(getUsers(currentPage, pageSize)),
+        requestUsers: (currentPage, pageSize) => dispatch(requestUsers(currentPage, pageSize)),
         followFetchingToggle: (id) => dispatch(followFetchingToggle(id)),
         follow: (id) => dispatch(follow(id)),
         unFollow: (id) => dispatch(unFollow(id)),

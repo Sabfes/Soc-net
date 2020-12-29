@@ -47,7 +47,7 @@ export const followFetchingToggle = (id) => {
     }
 }
 
-export const getUsers = (currentPage, pageSize) => (dispatch) => {
+export const requestUsers = (currentPage, pageSize) => (dispatch) => {
     dispatch(isFetchToggle(true))
     userApi.getUsers(currentPage, pageSize).then(res => {
         dispatch(setUsers(res.data.items))

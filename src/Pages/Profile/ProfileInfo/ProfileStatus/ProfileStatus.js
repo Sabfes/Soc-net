@@ -1,47 +1,33 @@
-import React, {Component} from 'react'
+import React, {useEffect, useState} from 'react'
 import classes from './ProfileStatus.module.css'
 
-export default class ProfileStatus extends Component {
-    constructor(props) {
-        super(props);
+export const ProfileStatus = props => {
+    const [editMode, setEditMode] = useState(false)
+    const [status, setStatus] = useState(props.desc || 'desc')
 
-        this.state = {
-            editMode: false,
-            status: this.props.desc,
-        }
-    }
+    useEffect(()=>{
+        setStatus(props.desc)
+    }, [props.desc])
 
-    onChangeHandler = (status) => {
-        this.setState({status})
+    const updateProfileStatus = () => {
+        setEditMode(false)
+        props.updateProfileStatus(status)
     }
-    updateProfileStatus = () => {
-        this.setState({editMode: !this.state.editMode})
-        this.props.updateProfileStatus(this.state.status)
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.status !== this.props.status) {
-            this.setState({status: this.props.status})
-        }
-    }
-
-    render() {
-        return (
-            <div className={classes.ProfileStatus}>
-                {
-                    this.state.editMode
-                        ?   <input
-                                autoFocus={true}
-                                onBlur={this.updateProfileStatus}
-                                value={this.state.status}
-                                type="text"
-                                onChange={(e) => this.onChangeHandler(e.target.value)}
-                            />
-                        :   <span onDoubleClick={()=> this.setState({editMode: !this.state.editMode})} >{this.props.desc || 'description'}</span>
-                }
-            </div>
-        )
-    }
+    return (
+        <div className={classes.ProfileStatus}>
+            {
+                editMode
+                    ?   <input
+                        onBlur={updateProfileStatus}
+                        autoFocus={true}
+                        onChange={(e) => {setStatus(e.target.value)}}
+                        value={status}
+                        type='text'
+                    />
+                    :   <span onDoubleClick={ () => {setEditMode(true)} }>{status}</span>
+            }
+        </div>
+    )
 }
 
 
