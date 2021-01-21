@@ -7,7 +7,7 @@ export const initializedSuccess = () => {
     }
 }
 
-export const initializeApp = () => (dispatch) => {
+export const initializeApp = () => async (dispatch) => {
     let promise = dispatch(authMe())
 
     Promise.all([promise]).then( ()=> {
