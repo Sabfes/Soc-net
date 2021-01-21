@@ -30,22 +30,22 @@ export const setProfileStatus = status => {
 
 // THUNK CREATORS
 
-export const getProfile = (userId) => (dispatch) => {
-    userApi.getProfile(userId).then(res => {
-        dispatch(setProfileInfo(res.data))
-    })
+export const getProfile = (userId) => async (dispatch) => {
+    const res = await userApi.getProfile(userId)
+
+    dispatch(setProfileInfo(res.data))
 }
 
-export const getProfileStatus = userId => dispatch => {
-    userApi.getProfileStatus(userId).then(res => {
-        dispatch(setProfileStatus(res.data))
-    })
+export const getProfileStatus = userId => async (dispatch) => {
+    const res = await userApi.getProfileStatus(userId)
+
+    dispatch(setProfileStatus(res.data))
 }
 
-export const updateProfileStatus = status => dispatch => {
-    userApi.updateProfileStatus(status).then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(setProfileStatus(status))
-        }
-    })
+export const updateProfileStatus = status => async (dispatch) => {
+    const res = await userApi.updateProfileStatus(status)
+
+    if (res.data.resultCode === 0) {
+        dispatch(setProfileStatus(status))
+    }
 }

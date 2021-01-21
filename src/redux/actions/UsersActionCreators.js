@@ -47,16 +47,16 @@ export const followFetchingToggle = (id) => {
     }
 }
 
+// THUNK CREATORS
 export const requestUsers = (currentPage, pageSize) => (dispatch) => {
     dispatch(isFetchToggle(true))
+
     userApi.getUsers(currentPage, pageSize).then(res => {
         dispatch(setUsers(res.data.items))
         dispatch(setTotalUsersCount(res.data.totalCount))
         dispatch(isFetchToggle(false))
     })
 }
-
-// THUNK CREATORS
 
 export const follow = (id) => (dispatch) => {
     dispatch(followFetchingToggle(id))
