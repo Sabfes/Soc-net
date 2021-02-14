@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import classes from './Users.module.css'
 import {connect} from "react-redux";
 import UserCard from "./User/UserCard";
+import Paginator from "./Paginator/Paginator"
 import {
     changeCurrentPage, follow, followFetchingToggle,
     followToggle, requestUsers, unFollow,
@@ -33,11 +34,11 @@ class Users extends Component {
             <div className={classes.Users}>
                 <h1>users</h1>
 
-                <div className={classes.Users__pagination}>
-                    {pages.map( (i, k)=> {
-                        return <span key={k} id={i} onClick={this.changePage} className={this.props.currentPage === i ? classes.selectedPage : classes.Users__paginationItem} >{i}</span>
-                    })}
-                </div>
+                <Paginator
+                    pages={pages}
+                    changePage={this.changePage}
+                    currentPage={this.props.currentPage}
+                />
 
                 <div className={classes.Users__container}>
                     {
