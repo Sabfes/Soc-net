@@ -1,0 +1,17 @@
+.Paginator {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 50px;
+}
+.Paginator__item {
+    margin-right: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.selectedPage {
+    color: red;
+    cursor: pointer;
+    font-size: 26px;
+    margin-right: 5px;
+}
