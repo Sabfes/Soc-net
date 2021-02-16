@@ -8,11 +8,21 @@ const Paginator = (props) => {
     const leftBorder = (pageNumber - 1 ) * pagesQuantity
     const rightBorder = pageNumber * pagesQuantity
 
-    console.log(leftBorder, rightBorder)
+    const nextPage = () => {
+        if (Math.ceil(props.pages.length / pagesQuantity) > pageNumber) {
+            setPageNumber(prevState => prevState + 1)
+        }
+    }
+
+    const prefPage = () => {
+        if (1 < pageNumber) {
+            setPageNumber(prevState => prevState - 1)
+        }
+    }
 
     return (
         <div className={classes.Paginator}>
-            <button onClick={()=>{setPageNumber(prevState => prevState - 1)}}>-</button>
+            <button onClick={prefPage}>-</button>
             {props.pages
                 .filter( (i)=> i >=leftBorder && i <= rightBorder)
                 .map( (i, k)=> {
@@ -23,7 +33,7 @@ const Paginator = (props) => {
                         className={props.currentPage === i ? classes.selectedPage : classes.Paginator__item}
                     >{i}</span>
             })}
-            <button onClick={()=>{setPageNumber(prevState => prevState + 1)}} >+</button>
+            <button onClick={nextPage} >+</button>
         </div>
     )
 }
