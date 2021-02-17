@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Soc-net/static/css/main.3523cb9e.chunk.css",
+    "main.js": "/Soc-net/static/js/main.a448e5fa.chunk.js",
+    "main.js.map": "/Soc-net/static/js/main.a448e5fa.chunk.js.map",
+    "runtime-main.js": "/Soc-net/static/js/runtime-main.8ed204bb.js",
+    "runtime-main.js.map": "/Soc-net/static/js/runtime-main.8ed204bb.js.map",
+    "static/js/2.931f14f3.chunk.js": "/Soc-net/static/js/2.931f14f3.chunk.js",
+    "static/js/2.931f14f3.chunk.js.map": "/Soc-net/static/js/2.931f14f3.chunk.js.map",
+    "static/js/3.c706f56f.chunk.js": "/Soc-net/static/js/3.c706f56f.chunk.js",
+    "static/js/3.c706f56f.chunk.js.map": "/Soc-net/static/js/3.c706f56f.chunk.js.map",
+    "index.html": "/Soc-net/index.html",
+    "static/css/main.3523cb9e.chunk.css.map": "/Soc-net/static/css/main.3523cb9e.chunk.css.map",
+    "static/js/2.931f14f3.chunk.js.LICENSE.txt": "/Soc-net/static/js/2.931f14f3.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8ed204bb.js",
+    "static/js/2.931f14f3.chunk.js",
+    "static/css/main.3523cb9e.chunk.css",
+    "static/js/main.a448e5fa.chunk.js"
+  ]
+}
