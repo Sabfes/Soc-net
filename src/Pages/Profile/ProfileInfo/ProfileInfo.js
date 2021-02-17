@@ -1,9 +1,13 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import classes from './ProfileInfo.module.css'
 import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
 import defaultAvatar from '../../../img/avatar-profile.png'
 
 const ProfileInfo = (props) => {
+    useEffect(()=>{
+        console.log(props.avatarImg)
+    }, [props.avatarImg])
+
     const onAvatarSelected = (e) => {
         if (e.target.files.length) {
             props.savePhoto(e.target.files[0])

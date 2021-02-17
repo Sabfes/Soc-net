@@ -3,7 +3,10 @@ import {ADD_POST, SAVE_PHOTO_SUCCESS, SET_PROFILE_INFO, SET_PROFILE_STATUS} from
 const initialState = {
     posts: [{id: 1, text: 'id1 text'},{id: 2, text: 'id2 text'}],
     profileInfo: {
-        img: ''
+        img: {
+            large: '',
+            small: '',
+        }
     },
     status: '',
 }
@@ -21,12 +24,14 @@ const ProfileReducer = (state = initialState, action) => {
                 ...state, posts: arr,
             }
         case SET_PROFILE_INFO:
+            console.log(action)
             return {
-                ...state, profileInfo: {...action.data, img: action.photo},
+                ...state, profileInfo: {...action.data, img: {...action.data.photos}},
             }
         case SAVE_PHOTO_SUCCESS:
+            console.log(action)
             return {
-                ...state, profileInfo: {img: action.photo}
+                ...state, profileInfo: {img: {...action.photo}}
             }
         default:
             return state
