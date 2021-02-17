@@ -1,4 +1,4 @@
-import {ADD_POST, NEW_POST_TEXT, SET_PROFILE_INFO, SET_PROFILE_STATUS} from "./ActionTypes";
+import {ADD_POST, NEW_POST_TEXT, SAVE_PHOTO_SUCCESS, SET_PROFILE_INFO, SET_PROFILE_STATUS} from "./ActionTypes";
 import {userApi} from "../../api/api";
 
 // ACTION CREATORS
@@ -9,6 +9,11 @@ export const addPost = (text) => {
     }
 }
 
+export const savePhotoSuccess = photo => {
+    return {
+        type: SAVE_PHOTO_SUCCESS, photo,
+    }
+}
 
 export const newPostTextUpdate = (text) => {
     return {
@@ -47,5 +52,13 @@ export const updateProfileStatus = status => async (dispatch) => {
 
     if (res.data.resultCode === 0) {
         dispatch(setProfileStatus(status))
+    }
+}
+
+export const savePhoto = file => async (dispatch) => {
+    const res = await userApi.savePhoto(file)
+
+    if (res.data.resultCode === 0) {
+        dispatch(savePhotoSuccess(res.data.data.photos))
     }
 }

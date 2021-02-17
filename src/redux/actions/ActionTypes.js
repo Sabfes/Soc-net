@@ -5,7 +5,7 @@ export const NEW_POST_TEXT = 'profile/NEW_POST_TEXT'
 export const ADD_POST = 'profile/ADD_POST'
 export const SET_PROFILE_INFO = 'profile/SET_PROFILE_INFO'
 export const SET_PROFILE_STATUS = 'profile/SET_PROFILE_STATUS'
-
+export const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
 
 // MESSAGES
 export const ADD_MESSAGE = 'message/ADD_MESSAGE'

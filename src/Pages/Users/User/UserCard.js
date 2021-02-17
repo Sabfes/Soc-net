@@ -1,13 +1,14 @@
 import React from 'react'
 import classes from './UserCard.module.css'
 import {NavLink} from "react-router-dom";
+import defaultAvatar from '../../../img/avatar-profile.png'
 
 const UserCard = props => {
     return (
         <div className={classes.UserCard}>
             <div className={classes.UserCard__left}>
                 <NavLink to={'/profile/' + props.id}>
-                    <img className={classes.UserCard__avatar} src={ props.imgUrl !== null ? props.imgUrl : 'https://yt3.ggpht.com/a/AATXAJzG5p_3KKV475sPi14UzJAG_8kzRo0BkJex7g=s900-c-k-c0xffffffff-no-rj-mo'} alt=""/>
+                    <img className={classes.UserCard__avatar} src={ props.imgUrl !== null ? props.imgUrl : defaultAvatar} alt=""/>
                 </NavLink>
                 {
                     props.isFollow
@@ -27,8 +28,6 @@ const UserCard = props => {
                         >
                             {"FOLLOW"}
                         </button>
-
-
                 }
             </div>
 

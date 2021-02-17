@@ -8,14 +8,14 @@ import {
     getProfile,
     getProfileStatus,
     newPostTextUpdate,
-    updateProfileStatus
+    updateProfileStatus,
+    savePhoto
 } from "../../redux/actions/ProfileActionCreators";
 import {Redirect, withRouter} from "react-router-dom";
 import {compose} from "redux";
 
 class Profile extends React.Component {
-
-    componentDidMount() {
+    updateProfile = () => {
         if (!this.props.isAuth) return <Redirect to={'/login'} />
 
         let userId = this.props.match.params.id
@@ -29,6 +29,15 @@ class Profile extends React.Component {
         this.props.getProfileStatus(userId)
     }
 
+    componentDidMount() {
+        this.updateProfile()
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.match.params.id !== prevProps.match.params.id) {
+            this.updateProfile()
+        }
+    }
 
     onChangeHandler = (text) => {
         this.props.addPost(text.newPostText)
@@ -39,9 +48,11 @@ class Profile extends React.Component {
         return (
             <main className={classes.ProfileInfo}>
                 <ProfileInfo
+                    isOwner={+this.props.match.params.id === +this.props.userId}
                     updateProfileStatus={this.props.updateProfileStatus}
                     avatarImg={this.props.profileInfo.img}
                     desc={this.props.status}
+                    savePhoto={this.props.savePhoto}
                 />
                 <MyPosts
                     onClick={this.props.addPost}
@@ -73,5 +84,6 @@ export default compose(
         getProfile,
         updateProfileStatus,
         getProfileStatus,
+        savePhoto,
     })
 )(Profile)
