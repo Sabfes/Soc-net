@@ -1,4 +1,4 @@
-import {ADD_POST, SET_PROFILE_INFO, SET_PROFILE_STATUS} from "../actions/ActionTypes";
+import {ADD_POST, SAVE_PHOTO_SUCCESS, SET_PROFILE_INFO, SET_PROFILE_STATUS} from "../actions/ActionTypes";
 
 const initialState = {
     posts: [{id: 1, text: 'id1 text'},{id: 2, text: 'id2 text'}],
@@ -22,7 +22,11 @@ const ProfileReducer = (state = initialState, action) => {
             }
         case SET_PROFILE_INFO:
             return {
-                ...state, profileInfo: {...action.data, img: action.data.photos.small},
+                ...state, profileInfo: {...action.data, img: action.photo},
+            }
+        case SAVE_PHOTO_SUCCESS:
+            return {
+                ...state, profileInfo: {img: action.photo}
             }
         default:
             return state
