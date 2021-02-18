@@ -30,7 +30,7 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        this.updateProfile()
+            this.updateProfile()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -48,6 +48,7 @@ class Profile extends React.Component {
         return (
             <main className={classes.ProfileInfo}>
                 <ProfileInfo
+                    profileInfo={this.props.profileInfo}
                     isOwner={+this.props.match.params.id === +this.props.userId}
                     updateProfileStatus={this.props.updateProfileStatus}
                     avatarImg={this.props.profileInfo.img}

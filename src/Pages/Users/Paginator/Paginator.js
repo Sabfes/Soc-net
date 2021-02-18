@@ -33,7 +33,7 @@ const Paginator = (props) => {
                         className={props.currentPage === i ? classes.selectedPage : classes.Paginator__item}
                     >{i}</span>
             })}
-            <button onClick={nextPage} >+</button>
+            <button onClick={nextPage}>+</button>
         </div>
     )
 }
