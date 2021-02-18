@@ -4,6 +4,7 @@ import classes from "../MyPosts.module.css";
 import {TextArea} from "../../../../components/FormControls/FormControls";
 
 const maxLength = maxLengthCreator(10)
+
 const newPostForm = props => {
     return (
         <form onSubmit={props.handleSubmit}>

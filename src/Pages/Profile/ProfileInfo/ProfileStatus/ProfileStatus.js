@@ -15,6 +15,7 @@ export const ProfileStatus = props => {
     }
     return (
         <div className={classes.ProfileStatus}>
+            Status:
             {
                 editMode
                     ?   <input
@@ -24,7 +25,13 @@ export const ProfileStatus = props => {
                         value={status}
                         type='text'
                     />
-                    :   <span onDoubleClick={ () => {setEditMode(true)} }>{status}</span>
+                    :   <span onDoubleClick={ () => {
+                            if (props.isOwner) {
+                                setEditMode(true)
+                            }
+                        }}>
+                            {status}
+                        </span>
             }
         </div>
     )
