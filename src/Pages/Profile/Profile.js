@@ -9,7 +9,7 @@ import {
     getProfileStatus,
     newPostTextUpdate,
     updateProfileStatus,
-    savePhoto
+    savePhoto, updateProfileInfo
 } from "../../redux/actions/ProfileActionCreators";
 import {Redirect, withRouter} from "react-router-dom";
 import {compose} from "redux";
@@ -30,7 +30,7 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-            this.updateProfile()
+        this.updateProfile()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -48,6 +48,7 @@ class Profile extends React.Component {
         return (
             <main className={classes.ProfileInfo}>
                 <ProfileInfo
+                    updateProfileInfo={this.props.updateProfileInfo}
                     profileInfo={this.props.profileInfo}
                     isOwner={+this.props.match.params.id === +this.props.userId}
                     updateProfileStatus={this.props.updateProfileStatus}
@@ -83,6 +84,7 @@ export default compose(
         newPostTextUpdate,
         addPost,
         getProfile,
+        updateProfileInfo,
         updateProfileStatus,
         getProfileStatus,
         savePhoto,

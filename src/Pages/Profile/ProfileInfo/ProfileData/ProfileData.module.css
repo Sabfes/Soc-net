@@ -1,0 +1,13 @@
+.ProfileData {
+
+}
+
+.ProfileData__info {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.ProfileData__contacts {
+    display: flex;
+    flex-direction: column;
+}

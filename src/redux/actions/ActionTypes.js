@@ -7,6 +7,7 @@ export const SET_PROFILE_INFO = 'profile/SET_PROFILE_INFO'
 export const SET_PROFILE_STATUS = 'profile/SET_PROFILE_STATUS'
 export const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
 
+
 // MESSAGES
 export const ADD_MESSAGE = 'message/ADD_MESSAGE'
 export const NEW_MESSAGE_TEXT = 'message/NEW_MESSAGE_TEXT'
