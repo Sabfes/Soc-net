@@ -33,7 +33,17 @@ export const setProfileStatus = status => {
     }
 }
 
+
 // THUNK CREATORS
+
+export const updateProfileInfo = data => async (dispatch) => {
+    const res = await userApi.updateProfileInfo(data)
+
+    if (res.data.resultCode === 0) {
+        dispatch(setProfileInfo(data))
+    }
+
+}
 
 export const getProfile = (userId) => async (dispatch) => {
     const res = await userApi.getProfile(userId)

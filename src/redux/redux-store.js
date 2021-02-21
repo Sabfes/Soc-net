@@ -4,8 +4,9 @@ import MessagesReducer from "./reducers/MessagesReducer";
 import UsersReducer from "./reducers/UsersReducer";
 import AuthReducer from "./reducers/AuthReducer";
 import thunk from "redux-thunk";
-import {reducer as formReducer} from "redux-form";
 import AppReducer from "./reducers/AppReducer";
+import {reducer as formReducer} from "redux-form";
+
 
 const rootReducer = combineReducers({
     profilePage: ProfileReducer,

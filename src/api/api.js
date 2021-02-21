@@ -30,6 +30,9 @@ export const userApi = {
     updateProfileStatus: (status) => {
         return instance.put(`profile/status`,{status})
     },
+    updateProfileInfo: (data) => {
+        return instance.put(`profile/`, {data})
+    },
     login: (email, password, rememberMe = false) => {
         return instance.post(`auth/login`, {email, password, rememberMe})
     },
