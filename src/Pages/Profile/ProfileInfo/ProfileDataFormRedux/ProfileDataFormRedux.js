@@ -1,6 +1,5 @@
 import React from "react";
 import classes from "./ProfileDataFormRedux.module.css";
-// import Contact from "../Contacts/Contact";
 import {createField, Input, TextArea} from "../../../../components/FormControls/FormControls";
 import {reduxForm} from "redux-form";
 import {requiredField} from "../../../../utils/validate/validate";
@@ -8,6 +7,16 @@ import {requiredField} from "../../../../utils/validate/validate";
 const ProfileDataForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit(props.onSubmit)}>
+             <button type="submit">save</button>
+
+            {
+                props.error
+                    ?   <div style={{color: 'red', marginTop: '20px', fontSize: '24px'}}>
+                        {props.error}
+                    </div>
+                    : null
+            }
+
              <div className={classes.MainInfo}>
                  <div>
                      <p>Full Name:</p>
@@ -19,13 +28,13 @@ const ProfileDataForm = (props) => {
                 <div className={classes.MainInfo__job}>
                     <p>Looking For a job?</p>
                     {
-                        createField('Looking For a job?', 'job', [], Input, {type: 'checkbox'})
+                        createField('Looking For a job?', 'lookingForAJob', [], Input, {type: 'checkbox'})
                     }
                 </div>
                 <div>
                     <p>Job Description:</p>
                     {
-                        createField('job Description', 'job-description', [requiredField], TextArea)
+                        createField('job Description', 'lookingForAJobDescription', [requiredField], TextArea)
                     }
                 </div>
                 <div>
@@ -36,15 +45,16 @@ const ProfileDataForm = (props) => {
                 </div>
             </div>
 
-            <button>save</button>
-            {/*<div>*/}
-            {/*    Contacts:*/}
-            {/*    {*/}
-            {/*        Object.keys(profileInfo.contacts).map( item => {*/}
-            {/*            return <Contact key={item} title={item} value={profileInfo.contacts[item]}/>*/}
-            {/*        })*/}
-            {/*    }*/}
-            {/*</div>*/}
+            <div>
+                Contacts:
+                {
+                    Object.keys(props.profileInfo.contacts).map( (item, index) => {
+                        return <div key={index}>
+                            {createField(item, 'contacts.' + item, [], Input)}
+                        </div>
+                    })
+                }
+            </div>
         </form>
     )
 }

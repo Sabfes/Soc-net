@@ -26,14 +26,14 @@ const ProfileData = ({profileInfo}) => {
                 </div>
             </div>
 
-            {/*<div className={classes.ProfileData__contacts}>*/}
-            {/*    Contacts:*/}
-            {/*    {*/}
-            {/*        Object.keys(profileInfo.contacts).map( item => {*/}
-            {/*            return <Contact key={item} title={item} value={profileInfo.contacts[item]}/>*/}
-            {/*        })*/}
-            {/*    }*/}
-            {/*</div>*/}
+            <div className={classes.ProfileData__contacts}>
+                Contacts:
+                {
+                    Object.keys(profileInfo.contacts).map( item => {
+                        return <Contact key={item} title={item} value={profileInfo.contacts[item]}/>
+                    })
+                }
+            </div>
         </div>
     )
 }

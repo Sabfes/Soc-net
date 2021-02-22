@@ -15,8 +15,9 @@ const ProfileInfo = (props) => {
     }
 
     const onSubmitHandler = (formData) => {
-        props.updateProfileInfo(formData)
-        console.log(formData)
+        props.updateProfileInfo(formData).then(()=> {
+            setEditMode(false)
+        })
     }
 
     return (
@@ -38,14 +39,15 @@ const ProfileInfo = (props) => {
             {/*Показываем кнопку настройки, если страница - владельца.*/}
             {
                 props.isOwner && !editMode
-                    ? <button onClick={()=> setEditMode(true)}>edit</button>
+                    ? <button onClick={ ()=> {setEditMode(true)} }>edit</button>
                     : null
             }
             {/*Показываем форму настройки если включен editMode*/}
             {
                 editMode
                     ? <ProfileDataFormRedux
-                        offEditMode={setEditMode}
+                        profileInfo={props.profileInfo}
+                        initialValues={props.profileInfo}
                         onSubmit={onSubmitHandler}
                     />
                     : <ProfileData

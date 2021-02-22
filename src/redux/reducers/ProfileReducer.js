@@ -25,8 +25,6 @@ const ProfileReducer = (state = initialState, action) => {
                 ...state, posts: arr,
             }
         case SET_PROFILE_INFO:
-            debugger
-            console.log(action.data)
             return {
                 ...state, profileInfo: {...action.data, img: {...action.data.photos}},
             }
