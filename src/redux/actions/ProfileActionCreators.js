@@ -1,5 +1,6 @@
 import {ADD_POST, NEW_POST_TEXT, SAVE_PHOTO_SUCCESS, SET_PROFILE_INFO, SET_PROFILE_STATUS} from "./ActionTypes";
 import {userApi} from "../../api/api";
+import {stopSubmit} from "redux-form";
 
 // ACTION CREATORS
 
@@ -36,11 +37,15 @@ export const setProfileStatus = status => {
 
 // THUNK CREATORS
 
-export const updateProfileInfo = data => async (dispatch) => {
+export const updateProfileInfo = data => async (dispatch, getState) => {
+    const userId = getState().auth.userId
     const res = await userApi.updateProfileInfo(data)
 
     if (res.data.resultCode === 0) {
-        dispatch(setProfileInfo(data))
+        dispatch(getProfile(userId))
+    } else {
+        dispatch(stopSubmit('profileData', {_error: res.data.messages[0]}))
+        return Promise.reject(res.data.messages[0])
     }
 
 }
@@ -67,7 +72,7 @@ export const updateProfileStatus = status => async (dispatch) => {
 
 export const savePhoto = file => async (dispatch) => {
     const res = await userApi.savePhoto(file)
-    console.log('api send')
+
     if (res.data.resultCode === 0) {
         console.log('res data success')
         dispatch(savePhotoSuccess(res.data.data.photos))
