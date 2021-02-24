@@ -3,11 +3,15 @@ import classes from "./ProfileDataFormRedux.module.css";
 import {createField, Input, TextArea} from "../../../../components/FormControls/FormControls";
 import {reduxForm} from "redux-form";
 import {requiredField} from "../../../../utils/validate/validate";
+import Button from "../../../../components/Button/Button";
 
 const ProfileDataForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit(props.onSubmit)}>
-             <button type="submit">save</button>
+             <Button
+                type="submit"
+                value="save"
+             />
 
             {
                 props.error

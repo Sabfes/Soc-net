@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "../ProfileInfo.module.css";
+import classes from "./ProfileData.module.css";
 import Contact from "../Contacts/Contact";
 
 const ProfileData = ({profileInfo}) => {
@@ -8,21 +8,30 @@ const ProfileData = ({profileInfo}) => {
             {/*Описание профиля*/}
             <div className={classes.ProfileData__info}>
                 <div>
-                    Fullname: {profileInfo.fullName}
+                    Fullname:
+                    <span className={classes.ProfileData__inputInfo}>
+                        {profileInfo.fullName}
+                    </span>
                 </div>
                 <div>
-                    looking For A Job:{profileInfo.lookingForAJob ? 'yes' : 'no'}
+                    looking For A Job:
+                    <span className={classes.ProfileData__inputInfo}>
+                        {profileInfo.lookingForAJob ? 'yes' : 'no'}
+                    </span>
                 </div>
                 {/*Показываем описание поиска работы, если поиск работы === true*/}
                 {
                     profileInfo.lookingForAJob
                         ?  <div>
-                            looking For A Job Description:{profileInfo.lookingForAJobDescription}
+                            looking For A Job Description:
+                            <span className={classes.ProfileData__inputInfo}>
+                                {profileInfo.lookingForAJobDescription}
+                            </span>
                         </div>
                         : null
                 }
                 <div>
-                    aboutMe: {profileInfo.aboutMe}
+                    aboutMe: <span className={classes.ProfileData__inputInfo}>{profileInfo.aboutMe}</span>
                 </div>
             </div>
 
