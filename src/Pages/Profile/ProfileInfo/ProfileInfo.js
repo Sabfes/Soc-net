@@ -4,6 +4,7 @@ import {ProfileStatus} from "./ProfileStatus/ProfileStatus"
 import defaultAvatar from '../../../img/avatar-profile.png'
 import {ProfileDataFormRedux} from "./ProfileDataFormRedux/ProfileDataFormRedux"
 import ProfileData from "./ProfileData/ProfileData"
+import Button from "../../../components/Button/Button";
 
 const ProfileInfo = (props) => {
     const [editMode, setEditMode] = useState(false)
@@ -39,7 +40,9 @@ const ProfileInfo = (props) => {
             {/*Показываем кнопку настройки, если страница - владельца.*/}
             {
                 props.isOwner && !editMode
-                    ? <button onClick={ ()=> {setEditMode(true)} }>edit</button>
+                    ? <Button onClick={ ()=> {setEditMode(true)} }
+                        value={'edit'}
+                    />
                     : null
             }
             {/*Показываем форму настройки если включен editMode*/}
