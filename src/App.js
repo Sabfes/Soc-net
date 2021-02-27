@@ -2,7 +2,7 @@ import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./Pages/Profile/Profile";
 import Dialogs from "./Pages/Dialogs/Dialogs";
-import {Switch,withRouter, Route} from "react-router-dom";
+import {Switch, withRouter, Route} from "react-router-dom";
 // import {Redirect} from "react-router-dom"
 import News from "./Pages/News/News";
 import Music from "./Pages/Music/Music";
@@ -20,9 +20,10 @@ class App extends Component {
     componentDidMount() {
         this.props.initializeApp()
     }
+
     render() {
         if (!this.props.initialized) {
-            return <Loader />
+            return <Loader/>
         }
 
         return (
@@ -38,10 +39,10 @@ class App extends Component {
                     <Route path={'/music'} component={Music}/>
                     <Route path={'/settings'} component={Settings}/>
                     <Route path={'/login'} component={Login}/>
-                    <Route path={'/'} render={ ()=> <div> Home Page :3</div> }/>
+                    <Route path={'/'} render={() => <div> Home Page :3</div>}/>
                     {/*Редирект на профиль.*/}
                     {/*<Route path={'/'} render={ ()=> <Redirect to={'/profile'} /> }/>*/}
-                    <Route path={'*'} exact render={ ()=> <div>404 not found</div> } />
+                    <Route path={'*'} exact render={() => <div>404 not found</div>}/>
                 </Switch>
             </div>
         );
