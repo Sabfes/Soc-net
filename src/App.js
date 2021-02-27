@@ -13,7 +13,7 @@ import Login from "./Pages/Login/Login";
 import {Component} from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {initializeApp} from "./redux/actions/AppACtionCreator";
+import {initializeApp} from "./redux/actions/AppActionCreator";
 import Loader from "./components/Loader/Loader";
 
 class App extends Component {

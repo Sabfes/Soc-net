@@ -3,32 +3,51 @@ import {userApi} from "../../api/api";
 import {stopSubmit} from "redux-form";
 
 // ACTION CREATORS
+type AddPostType = {
+    type: typeof ADD_POST
+    text: string
+}
 
-export const addPost = (text) => {
+export const addPost = (text: string): AddPostType => {
     return {
         type: ADD_POST, text
     }
 }
 
-export const savePhotoSuccess = photo => {
+type SavePhotoSuccessType = {
+    type: typeof SAVE_PHOTO_SUCCESS
+    photo: string
+}
+
+export const savePhotoSuccess = (photo: string): SavePhotoSuccessType => {
     return {
         type: SAVE_PHOTO_SUCCESS, photo,
     }
 }
 
-export const newPostTextUpdate = (text) => {
+type NewPostTextUpdateType = {
+    type: typeof NEW_POST_TEXT
+    text: string
+}
+
+export const newPostTextUpdate = (text:string): NewPostTextUpdateType => {
     return {
         type: NEW_POST_TEXT, text
     }
 }
 
-export const setProfileInfo = (data) => {
+export const setProfileInfo = (data: any) => {
     return {
         type: SET_PROFILE_INFO, data
     }
 }
 
-export const setProfileStatus = status => {
+type SetProfileStatusType = {
+    type: typeof SET_PROFILE_STATUS
+    status: string
+}
+
+export const setProfileStatus = (status: string): SetProfileStatusType => {
     return {
         type: SET_PROFILE_STATUS, status,
     }
@@ -37,7 +56,7 @@ export const setProfileStatus = status => {
 
 // THUNK CREATORS
 
-export const updateProfileInfo = data => async (dispatch, getState) => {
+export const updateProfileInfo = (data: any) => async (dispatch:any, getState: any) => {
     const userId = getState().auth.userId
     const res = await userApi.updateProfileInfo(data)
 
@@ -50,19 +69,19 @@ export const updateProfileInfo = data => async (dispatch, getState) => {
 
 }
 
-export const getProfile = (userId) => async (dispatch) => {
+export const getProfile = (userId:number) => async (dispatch:any) => {
     const res = await userApi.getProfile(userId)
 
     dispatch(setProfileInfo(res.data))
 }
 
-export const getProfileStatus = userId => async (dispatch) => {
+export const getProfileStatus = (userId:number) => async (dispatch:any) => {
     const res = await userApi.getProfileStatus(userId)
 
     dispatch(setProfileStatus(res.data))
 }
 
-export const updateProfileStatus = status => async (dispatch) => {
+export const updateProfileStatus = (status:string) => async (dispatch:any) => {
     const res = await userApi.updateProfileStatus(status)
 
     if (res.data.resultCode === 0) {
@@ -70,7 +89,7 @@ export const updateProfileStatus = status => async (dispatch) => {
     }
 }
 
-export const savePhoto = file => async (dispatch) => {
+export const savePhoto = (file: string) => async (dispatch:any) => {
     const res = await userApi.savePhoto(file)
 
     if (res.data.resultCode === 0) {
