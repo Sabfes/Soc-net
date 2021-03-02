@@ -1,17 +1,23 @@
 import React, {useEffect, useState} from 'react'
 import classes from './ProfileStatus.module.css'
 
-export const ProfileStatus = props => {
+type PropsTypes = {
+    updateProfileStatus: (status: string) => void
+    desc: string
+    isOwner: boolean
+}
+
+export const ProfileStatus: React.FC<PropsTypes> = ({desc, updateProfileStatus, isOwner}) => {
     const [editMode, setEditMode] = useState(false)
-    const [status, setStatus] = useState(props.desc || 'desc')
+    const [status, setStatus] = useState(desc || 'desc')
 
     useEffect(()=>{
-        setStatus(props.desc)
-    }, [props.desc])
+        setStatus(desc)
+    }, [desc])
 
-    const updateProfileStatus = () => {
+    const onChangeProfileStatus = () => {
         setEditMode(false)
-        props.updateProfileStatus(status)
+        updateProfileStatus(status)
     }
     return (
         <div className={classes.ProfileStatus}>
@@ -19,14 +25,14 @@ export const ProfileStatus = props => {
             {
                 editMode
                     ?   <input
-                        onBlur={updateProfileStatus}
+                        onBlur={onChangeProfileStatus}
                         autoFocus={true}
                         onChange={(e) => {setStatus(e.target.value)}}
                         value={status}
                         type='text'
                     />
-                    :   <span onDoubleClick={ () => {
-                            if (props.isOwner) {
+                    :   <span className={classes.ProfileStatus_status} onDoubleClick={ () => {
+                            if (isOwner) {
                                 setEditMode(true)
                             }
                         }}>

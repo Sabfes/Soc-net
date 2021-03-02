@@ -16,7 +16,7 @@ import {compose} from "redux";
 
 class Profile extends React.Component {
     updateProfile = () => {
-        if (!this.props.isAuth) return <Redirect to={'/login'} />
+        if (!this.props.isAuth) return <Redirect to={'/login'}/>
 
         let userId = this.props.match.params.id
         if (!userId) {
@@ -44,7 +44,7 @@ class Profile extends React.Component {
     }
 
     render() {
-        if (!this.props.isAuth) return <Redirect to={'/login'} />
+        if (!this.props.isAuth) return <Redirect to={'/login'}/>
         return (
             <main className={classes.ProfileInfo}>
                 <ProfileInfo
@@ -65,7 +65,6 @@ class Profile extends React.Component {
         )
     }
 }
-
 
 
 function mapStateToProps(state) {

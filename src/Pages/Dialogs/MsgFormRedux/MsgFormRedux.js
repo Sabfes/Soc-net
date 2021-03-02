@@ -1,3 +1,4 @@
+import React from 'react'
 import {Field, reduxForm} from "redux-form";
 import classes from "../Dialogs.module.css";
 import {TextArea} from "../../../components/FormControls/FormControls";

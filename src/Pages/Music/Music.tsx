@@ -1,8 +1,10 @@
 import React from 'react'
 import classes from './Music.module.css'
+// @ts-ignore
 import audioTest from '../../audio/audio-boyka.mp3'
-const Music = () => {
-    const audioPlayHandler = (e) => {
+
+const Music: React.FC = () => {
+    const audioPlayHandler = (e: any): void => {
         console.log(e.target)
     }
 

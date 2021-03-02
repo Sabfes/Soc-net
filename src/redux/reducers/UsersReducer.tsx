@@ -5,8 +5,18 @@ import {
     SET_USERS,
     SET_USERS_TOTAL_COUNT
 } from "../actions/ActionTypes";
+import {UserType} from "../../types/types";
 
-const initialState = {
+
+type InitialStateType = {
+    users: Array<UserType>,
+    pageSize: number,
+    totalUsersCount: number,
+    currentPage: number,
+    isFetch: boolean,
+    followFetchingId: Array<number>,
+}
+const initialState: InitialStateType = {
     users: [],
     pageSize: 100,
     totalUsersCount: 0,
@@ -15,11 +25,11 @@ const initialState = {
     followFetchingId: [],
 }
 
-const UsersReducer = (state = initialState, action) => {
+const UsersReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case FOLLOW_TOGGLE:
             return {
-                ...state, users: state.users.map( (item) => {
+                ...state, users: state.users.map( (item: any) => {
                     if (+item.id === +action.id) {
                         return {...item, followed: !item.followed}
                     }
@@ -45,7 +55,7 @@ const UsersReducer = (state = initialState, action) => {
         case FOLLOW_FETCHING_TOGGLE:
             const prevArray = state.followFetchingId
             let res
-            if (prevArray.indexOf( +action.id ) === -1) {
+            if (prevArray.indexOf( action.id ) === -1) {
                 res = [...state.followFetchingId, action.id]
             } else {
                 res = [...state.followFetchingId.filter( i => i !== action.id)]

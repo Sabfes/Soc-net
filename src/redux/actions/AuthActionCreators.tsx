@@ -1,8 +1,20 @@
-import {SET_USER_DATA} from "./ActionTypes";
+import  {SET_USER_DATA} from "./ActionTypes";
 import {userApi} from "../../api/api";
 import {stopSubmit} from "redux-form";
 
-export const setAuthUserData = (userId, email, login, isAuth) => {
+type SetAuthUserDataActionDataType = {
+    userId: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean
+}
+
+type SetAuthUserDataActionType = {
+    type: typeof SET_USER_DATA
+    data: SetAuthUserDataActionDataType
+}
+
+export const setAuthUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean): SetAuthUserDataActionType => {
     return {
         type: SET_USER_DATA, data: {userId, email, login, isAuth}
     }
@@ -10,7 +22,7 @@ export const setAuthUserData = (userId, email, login, isAuth) => {
 
 // THUNK CREATORS
 
-export const authMe = () => async (dispatch) => {
+export const authMe = () => async (dispatch: any) => {
     let response = await userApi.getAuth()
 
     if (response.data.resultCode === 0) {
@@ -19,7 +31,7 @@ export const authMe = () => async (dispatch) => {
     }
 }
 
-export const LoginUser = (email, login, rememberMe) => async (dispatch) => {
+export const LoginUser = (email: string, login: string, rememberMe: boolean) => async (dispatch: any) => {
     let res = await userApi.login(email, login, rememberMe)
 
     if (res.data.resultCode === 0) {
@@ -30,7 +42,7 @@ export const LoginUser = (email, login, rememberMe) => async (dispatch) => {
     }
 }
 
-export const logoutUser = () => async (dispatch) => {
+export const logoutUser = () => async (dispatch: any) => {
     const res = await userApi.logout()
 
     if (res.data.resultCode === 0) {

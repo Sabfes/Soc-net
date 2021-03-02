@@ -22,7 +22,7 @@ const ProfileData = ({profileInfo}) => {
                 {/*Показываем описание поиска работы, если поиск работы === true*/}
                 {
                     profileInfo.lookingForAJob
-                        ?  <div>
+                        ? <div>
                             looking For A Job Description:
                             <span className={classes.ProfileData__inputInfo}>
                                 {profileInfo.lookingForAJobDescription}
@@ -38,7 +38,7 @@ const ProfileData = ({profileInfo}) => {
             <div className={classes.ProfileData__contacts}>
                 Contacts:
                 {
-                    Object.keys(profileInfo.contacts).map( item => {
+                    Object.keys(profileInfo.contacts).map(item => {
                         return <Contact key={item} title={item} value={profileInfo.contacts[item]}/>
                     })
                 }

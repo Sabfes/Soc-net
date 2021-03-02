@@ -1,5 +1,11 @@
 /*loader*/
 
+.Container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .ldsEllipsis {
     display: inline-block;
     position: relative;

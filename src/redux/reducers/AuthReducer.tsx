@@ -1,6 +1,14 @@
 import {SET_USER_DATA} from "../actions/ActionTypes";
 
-const initialState = {
+export type initialStateType = {
+    userId: number | null,
+    email: string | null,
+    login: string | null,
+    isFetching: boolean,
+    isAuth: boolean,
+}
+
+const initialState: initialStateType = {
     userId: null,
     email: null,
     login: null,
@@ -8,7 +16,7 @@ const initialState = {
     isAuth: false,
 }
 
-const AuthReducer = (state = initialState, action) => {
+const AuthReducer = (state = initialState, action: any): initialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {

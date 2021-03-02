@@ -8,23 +8,23 @@ import Button from "../../../../components/Button/Button";
 const ProfileDataForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit(props.onSubmit)}>
-             <Button
+            <Button
                 type="submit"
                 value="save"
-             />
+            />
 
             {
                 props.error
-                    ?   <div style={{color: 'red', marginTop: '20px', fontSize: '24px'}}>
+                    ? <div style={{color: 'red', marginTop: '20px', fontSize: '24px'}}>
                         {props.error}
                     </div>
                     : null
             }
 
-             <div className={classes.MainInfo}>
-                 <div>
-                     <p>Full Name:</p>
-                     {
+            <div className={classes.MainInfo}>
+                <div>
+                    <p>Full Name:</p>
+                    {
                         createField('FullName', 'fullName', [requiredField], Input,)
                     }
                 </div>
@@ -52,7 +52,7 @@ const ProfileDataForm = (props) => {
             <div>
                 Contacts:
                 {
-                    Object.keys(props.profileInfo.contacts).map( (item, index) => {
+                    Object.keys(props.profileInfo.contacts).map((item, index) => {
                         return <div key={index}>
                             {createField(item, 'contacts.' + item, [], Input)}
                         </div>
