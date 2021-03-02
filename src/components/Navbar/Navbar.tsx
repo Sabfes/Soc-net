@@ -2,13 +2,18 @@ import React from 'react'
 import classes from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
+import {AppStateType} from "../../redux/redux-store";
 
-const Navbar = (props) => {
+type PropsType = {
+    userId: number
+}
+
+const Navbar: React.FC<PropsType> = ({userId}) => {
     return (
         <nav className={classes.Navbar}>
             <NavLink
                 className={classes.Navbar__link}
-                to={'/profile/' + props.userId}
+                to={'/profile/' + userId}
                 activeClassName={classes.Navbar__linkActive}
             >
                 Profile
@@ -58,7 +63,7 @@ const Navbar = (props) => {
     )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: AppStateType) => {
     return {
         userId: state.auth.userId,
     }

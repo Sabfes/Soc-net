@@ -1,23 +1,42 @@
-import React, {Component} from 'react';
+import React from 'react';
 import classes from './Users.module.css'
 import {connect} from "react-redux";
 import UserCard from "./User/UserCard";
 import Paginator from "./Paginator/Paginator"
 import {
     changeCurrentPage, follow, followFetchingToggle,
-    followToggle, requestUsers, unFollow,
+    requestUsers, unFollow,
 } from "../../redux/actions/UsersActionCreators";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import Loader from "../../components/Loader/Loader";
+import {UserType} from "../../types/types";
+import {AppStateType} from "../../redux/redux-store";
 
+type MapStatePropsTypes = {
+    currentPage: number
+    users: Array<UserType>
+    isFetch: boolean
+    totalUsersCount: number
+    pageSize: number
+    followFetchingId: Array<number>
+}
 
-class Users extends Component {
+type MapDispatchPropsTypes = {
+    changeCurrentPage: (id: number) => void
+    requestUsers: (id: number, pageSize: number) => void
+    unFollow: () => void
+    follow: () => void
+    followFetchingToggle: () => void
+}
 
+type PropsTypes = MapStatePropsTypes & MapDispatchPropsTypes
+
+class Users extends React.Component<PropsTypes> {
     componentDidMount() {
         this.props.requestUsers(this.props.currentPage, this.props.pageSize)
     }
 
-    changePage = (e) => {
+    onChangePage = (e: { target: HTMLInputElement }): void => {
         this.props.changeCurrentPage(+e.target.id)
         this.props.requestUsers(+e.target.id, this.props.pageSize)
     }
@@ -36,7 +55,7 @@ class Users extends Component {
 
                 <Paginator
                     pages={pages}
-                    changePage={this.changePage}
+                    changePage={this.onChangePage}
                     currentPage={this.props.currentPage}
                 />
 
@@ -55,7 +74,7 @@ class Users extends Component {
                                     status={u.status}
                                     isFollow={u.followed}
                                     imgUrl={u.photos.small}
-                                    btnDisabled={this.props.followFetchingId}
+                                    btnDisabledIdArray={this.props.followFetchingId}
                                     follow={this.props.follow}
                                     unFollow={this.props.unFollow}
                                 />)
@@ -67,7 +86,7 @@ class Users extends Component {
     }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: AppStateType): MapStatePropsTypes {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
@@ -78,19 +97,15 @@ function mapStateToProps(state) {
     }
 }
 
-
-function mapDispatchToProps(dispatch) {
-    return {
-        followToggle: (id) => dispatch(followToggle(id)),
-        changeCurrentPage: (id) => dispatch(changeCurrentPage(id)),
-        requestUsers: (currentPage, pageSize) => dispatch(requestUsers(currentPage, pageSize)),
-        followFetchingToggle: (id) => dispatch(followFetchingToggle(id)),
-        follow: (id) => dispatch(follow(id)),
-        unFollow: (id) => dispatch(unFollow(id)),
+export default connect(mapStateToProps,
+    {
+        changeCurrentPage,
+        requestUsers,
+        followFetchingToggle,
+        follow,
+        unFollow
     }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withAuthRedirect(Users))
+)(withAuthRedirect(Users))
 
 
 

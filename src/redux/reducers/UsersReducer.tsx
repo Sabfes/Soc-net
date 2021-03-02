@@ -5,7 +5,6 @@ import {
     SET_USERS,
     SET_USERS_TOTAL_COUNT
 } from "../actions/ActionTypes";
-import {isNumber} from "util";
 import {UserType} from "../../types/types";
 
 

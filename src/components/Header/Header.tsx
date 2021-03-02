@@ -2,14 +2,19 @@ import React from "react"
 import classes from './Header.module.css'
 import {NavLink} from "react-router-dom";
 
-const Header = (props) => {
+type PropsTypes = {
+    logoutUser: () => void
+    isAuth: boolean
+}
+
+const Header: React.FC<PropsTypes> = ({logoutUser, isAuth}) => {
     return (
         <header className={classes.Header}>
             <span className={classes.Header__logo}>bitaev.SN</span>
 
             {
-                props.isAuth
-                    ? <button onClick={props.logoutUser}>{'logout'}</button>
+                isAuth
+                    ? <button onClick={logoutUser}>{'logout'}</button>
                     : <div>
                         <NavLink className={classes.Header__login} to={'/login'}>login</NavLink>
                     </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './Settings.module.css'
 
-const Settings = () => {
+const Settings: React.FC = () => {
     return (
         <div className={classes.Settings}>
             <h1>Settings</h1>

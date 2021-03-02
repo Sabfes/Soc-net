@@ -8,14 +8,31 @@ import {Redirect} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {AddMsgFormRedux} from "./MsgFormRedux/MsgFormRedux";
+import {AppStateType} from "../../redux/redux-store";
 
-const Dialogs = (props) => {
+type DialogType = {
+    name: string
+    id: number
+}
 
-    const addNewMsg = (s) => {
-        props.addNewMessageActionCreator(s.newMsg)
+type MessagesType = {
+    name: string
+    text: string
+}
+
+type PropsTypes = {
+    isAuth: boolean
+    addNewMessageActionCreator: (newMessage: string) => void
+    dialogs: Array<DialogType>
+    messages: Array<MessagesType>
+}
+
+const Dialogs: React.FC<PropsTypes> = ({isAuth, messages,dialogs,addNewMessageActionCreator}) => {
+    const addNewMsg = (s: any): void => {
+        addNewMessageActionCreator(s.newMsg)
     }
 
-    if (!props.isAuth) return <Redirect to={'/login'} />
+    if (!isAuth) return <Redirect to={'/login'} />
 
     return (
         <div className={classes.Dialogs}>
@@ -25,7 +42,7 @@ const Dialogs = (props) => {
                 {/*Список диалогов*/}
                 <div className={classes.Dialogs__lists}>
                     {
-                        props.dialogs.map( (d,i)=> {
+                        dialogs.map( (d,i)=> {
                             return <DialogItem key={i} name={d.name} id={d.id} />
                         })
                     }
@@ -35,7 +52,7 @@ const Dialogs = (props) => {
                 <div className={classes.Dialogs__messages}>
 
                     {
-                        props.messages.map( (m, i) => {
+                        messages.map( (m, i) => {
                             return <Message key={i} name={m.name} text={m.text} />
                         })
                     }
@@ -49,20 +66,14 @@ const Dialogs = (props) => {
 }
 
 
-function mapStateToProps(state) {
+function mapStateToProps(state: AppStateType) {
     return {
         messages: state.messagesPage.messages,
         dialogs: state.messagesPage.dialogs,
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        addNewMessageActionCreator: (message) => dispatch(addNewMessageActionCreator(message))
-    }
-}
-
 export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, {addNewMessageActionCreator}),
     withAuthRedirect,
 )(Dialogs)
