@@ -6,6 +6,7 @@ import {
     SET_USERS_TOTAL_COUNT
 } from "../actions/ActionTypes";
 import {UserType} from "../../types/types";
+import {UsersActionTypes} from "../actions/UsersActionCreators";
 
 
 type InitialStateType = {
@@ -25,7 +26,7 @@ const initialState: InitialStateType = {
     followFetchingId: [],
 }
 
-const UsersReducer = (state = initialState, action: any) => {
+const UsersReducer = (state = initialState, action: UsersActionTypes) => {
     switch (action.type) {
         case FOLLOW_TOGGLE:
             return {
