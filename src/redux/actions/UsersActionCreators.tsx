@@ -8,20 +8,30 @@ import {
 } from "./ActionTypes";
 import {userApi} from "../../api/api";
 import {UserType} from "../../types/types";
+import {AppStateType} from "../redux-store";
+import { Dispatch } from "redux";
 
+export type UsersActionTypes = FollowFetchingToggleType | SetUsersType | ChangeCurrentPageType |
+    SetTotalUsersCountType | IsFetchToggleType | FollowToggleType
 
 // ACTION CREATORS
 type FollowToggleType = {
     type: typeof FOLLOW_TOGGLE
     id: number
 }
+
 export const followToggle = (id: number): FollowToggleType => {
     return {
         type: FOLLOW_TOGGLE, id,
     }
 }
 
-export const setUsers = (users: Array<UserType>) => {
+type SetUsersType = {
+    type: typeof SET_USERS
+    users: Array<UserType>
+}
+
+export const setUsers = (users: Array<UserType>): SetUsersType => {
     return {
         type: SET_USERS, users,
     }
@@ -37,11 +47,11 @@ export const changeCurrentPage = (id: number): ChangeCurrentPageType => {
     }
 }
 
-type SetTotalUsersCount = {
+type SetTotalUsersCountType = {
     type: typeof SET_USERS_TOTAL_COUNT
     count: number
 }
-export const setTotalUsersCount = (count: number): SetTotalUsersCount => {
+export const setTotalUsersCount = (count: number): SetTotalUsersCountType => {
     return {
         type: SET_USERS_TOTAL_COUNT, count,
     }
@@ -68,17 +78,19 @@ export const followFetchingToggle = (id: number): FollowFetchingToggleType => {
 }
 
 // THUNK CREATORS
-export const requestUsers = (currentPage: number, pageSize: number) => (dispatch: any) => {
-    dispatch(isFetchToggle(true))
+export const requestUsers = (currentPage: number, pageSize: number) => {
+    return (dispatch: Dispatch<UsersActionTypes>) => {
+        dispatch(isFetchToggle(true))
 
-    userApi.getUsers(currentPage, pageSize).then(res => {
-        dispatch(setUsers(res.data.items))
-        dispatch(setTotalUsersCount(res.data.totalCount))
-        dispatch(isFetchToggle(false))
-    })
+        userApi.getUsers(currentPage, pageSize).then(res => {
+            dispatch(setUsers(res.data.items))
+            dispatch(setTotalUsersCount(res.data.totalCount))
+            dispatch(isFetchToggle(false))
+        })
+    }
 }
 
-export const follow = (id: number) => (dispatch: any) => {
+export const follow = (id: number) => (dispatch: Dispatch<UsersActionTypes>) => {
     dispatch(followFetchingToggle(id))
 
     userApi.follow(id).then(res => {
@@ -89,7 +101,7 @@ export const follow = (id: number) => (dispatch: any) => {
     })
 }
 
-export const unFollow = (id: number) => (dispatch: any) => {
+export const unFollow = (id: number) => (dispatch: Dispatch<UsersActionTypes>) => {
     dispatch(followFetchingToggle(id))
 
     userApi.unFollow(id).then(res => {
