@@ -16,14 +16,13 @@ type MapDispatchPropsType = {
 
 type PropsType = MapDispatchPropsType & MapStatePropsType
 
-const Login: FC<PropsType> = (props) => {
+const Login: FC<PropsType> = ({LoginUser, isAuth, userId}) => {
 
     const onSubmit = (formData: any) => {
-
-        props.LoginUser(formData.email, formData.password, formData.rememberMe)
+        LoginUser(formData.email, formData.password, formData.rememberMe)
     }
 
-    if (props.isAuth) return <Redirect to={`/profile/${props.userId}`} />
+    if (isAuth) return <Redirect to={`/profile/${userId}`} />
 
     return (
         <div className={classes.Login}>

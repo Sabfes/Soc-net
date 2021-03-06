@@ -4,7 +4,7 @@ import {profileApi} from "../../api/profileApi";
 import {stopSubmit} from "redux-form";
 import {AppStateType} from "../redux-store";
 import {Dispatch} from "redux";
-import {ProfileData} from "../../types/types";
+import {ProfileDataType} from "../../types/types";
 
 export type ProfileActionsTypes = AddPostType | SavePhotoSuccessType | NewPostTextUpdateType |
     SetProfileStatusType | NewPostTextUpdateType | SetProfileStatusType | SetProfileInfoType
@@ -23,10 +23,10 @@ export const addPost = (text: string): AddPostType => {
 
 type SavePhotoSuccessType = {
     type: typeof SAVE_PHOTO_SUCCESS
-    photo: string
+    photo: any
 }
 
-export const savePhotoSuccess = (photo: string): SavePhotoSuccessType => {
+export const savePhotoSuccess = (photo: any): SavePhotoSuccessType => {
     return {
         type: SAVE_PHOTO_SUCCESS, photo,
     }
@@ -45,10 +45,10 @@ export const newPostTextUpdate = (text:string): NewPostTextUpdateType => {
 
 type SetProfileInfoType = {
     type: typeof SET_PROFILE_INFO
-    data: ProfileData
+    data: ProfileDataType
 }
 
-export const setProfileInfo = (data: ProfileData): SetProfileInfoType => {
+export const setProfileInfo = (data: ProfileDataType): SetProfileInfoType => {
     return {
         type: SET_PROFILE_INFO, data
     }
@@ -70,15 +70,15 @@ export const updateProfileInfo = (data: any) => async (dispatch: any, getState: 
     const userId = getState().auth.userId
     const res = await profileApi.updateProfileInfo(data)
 
-    if (res.data.resultCode === ResultCodeEnum.SUCCESS) {
+    if (res.resultCode === ResultCodeEnum.SUCCESS) {
         if (userId !== null) {
             dispatch(getProfile(userId))
         } else {
             console.log('userId = null')
         }
     } else {
-        dispatch(stopSubmit('profileData', {_error: res.data.messages[0]}))
-        return Promise.reject(res.data.messages[0])
+        dispatch(stopSubmit('profileData', {_error: res.messages[0]}))
+        return Promise.reject(res.messages[0])
     }
 
 }
@@ -86,19 +86,19 @@ export const updateProfileInfo = (data: any) => async (dispatch: any, getState: 
 export const getProfile = (userId:number) => async (dispatch: any) => {
     const res = await profileApi.getProfile(userId)
 
-    dispatch(setProfileInfo(res.data))
+    dispatch(setProfileInfo(res))
 }
 
 export const getProfileStatus = (userId:number) => async (dispatch: Dispatch<ProfileActionsTypes>) => {
     const res = await profileApi.getProfileStatus(userId)
 
-    dispatch(setProfileStatus(res.data))
+    dispatch(setProfileStatus(res))
 }
 
 export const updateProfileStatus = (status:string) => async (dispatch: Dispatch<ProfileActionsTypes>) => {
     const res = await profileApi.updateProfileStatus(status)
 
-    if (res.data.resultCode === ResultCodeEnum.SUCCESS) {
+    if (res.resultCode === ResultCodeEnum.SUCCESS) {
         dispatch(setProfileStatus(status))
     }
 }
@@ -106,8 +106,7 @@ export const updateProfileStatus = (status:string) => async (dispatch: Dispatch<
 export const savePhoto = (file: string) => async (dispatch: Dispatch<ProfileActionsTypes>) => {
     const res = await profileApi.savePhoto(file)
 
-    if (res.data.resultCode === ResultCodeEnum.SUCCESS) {
-        console.log('res data success')
-        dispatch(savePhotoSuccess(res.data.data.photos))
+    if (res.resultCode === ResultCodeEnum.SUCCESS) {
+        dispatch(savePhotoSuccess(res.data.photos))
     }
 }

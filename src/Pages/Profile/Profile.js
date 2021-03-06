@@ -52,7 +52,7 @@ class Profile extends React.Component {
                     profileInfo={this.props.profileInfo}
                     isOwner={+this.props.match.params.id === +this.props.userId}
                     updateProfileStatus={this.props.updateProfileStatus}
-                    avatarImg={this.props.profileInfo.img}
+                    avatarImg={this.props.photos}
                     desc={this.props.status}
                     savePhoto={this.props.savePhoto}
                 />
@@ -74,6 +74,7 @@ function mapStateToProps(state) {
         status: state.profilePage.status,
         isAuth: state.auth.isAuth,
         userId: state.auth.userId,
+        photos: state.profilePage.photos,
     }
 }
 

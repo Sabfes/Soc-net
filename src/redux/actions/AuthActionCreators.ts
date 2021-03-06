@@ -31,10 +31,10 @@ export const setAuthUserData = (
 
 // THUNK CREATORS
 export const authMe = () => async (dispatch: Dispatch<AuthActionsTypes>) => {
-    let response = await authApi.getAuth()
+    let res = await authApi.getAuth()
 
-    if (response.data.resultCode === ResultCodeEnum.SUCCESS) {
-        let {id, login, email} = response.data.data
+    if (res.resultCode === ResultCodeEnum.SUCCESS) {
+        let {id, login, email} = res.data
         dispatch(setAuthUserData(id, email, login, true))
     }
 }
@@ -45,13 +45,12 @@ export const LoginUser = (
     rememberMe: boolean
 ) => async (dispatch: any) => {
     let res = await authApi.login(email, login, rememberMe)
-    console.log('res')
-    if (res.data.resultCode === ResultCodeEnum.SUCCESS) {
+    if (res.resultCode === ResultCodeEnum.SUCCESS) {
         console.log('norm')
         dispatch(authMe())
     } else {
         console.log('stop')
-        const msg = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
+        const msg = res.messages.length > 0 ? res.messages[0] : 'Some error'
         dispatch(stopSubmit('login', {_error: msg}))
     }
 }

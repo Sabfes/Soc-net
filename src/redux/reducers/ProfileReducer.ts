@@ -6,25 +6,25 @@ type InitialStatePostType = {
     text: string
 }
 type InitialStateType = {
-    posts: Array<InitialStatePostType>,
+    posts: Array<InitialStatePostType>
     profileInfo: {
-        contacts: {},
-        img: {
-            large: string,
-            small: string,
-        }
-    },
-    status: string,
+        contacts: {}
+    }
+    photos: {
+        small: string
+        large: string
+    }
+    status: string
 }
 
 const initialState: InitialStateType = {
     posts: [{id: 1, text: 'id1 text'},{id: 2, text: 'id2 text'}],
     profileInfo: {
         contacts: {},
-        img: {
-            large: '',
-            small: '',
-        }
+    },
+    photos: {
+        large: '',
+        small: '',
     },
     status: '',
 }
@@ -43,11 +43,11 @@ const ProfileReducer = (state = initialState, action: ProfileActionsTypes) => {
             }
         case SET_PROFILE_INFO:
             return {
-                ...state, profileInfo: {...action.data, img: {...action.data.photos}},
+                ...state, profileInfo: {...action.data}, photos: {...action.data.photos}
             }
         case SAVE_PHOTO_SUCCESS:
             return {
-                ...state, profileInfo: {...state.profileInfo, img: action.photo}
+                ...state, photos: {small: action.photo.small, large: action.photo.large}
             }
         default:
             return state
