@@ -13,10 +13,8 @@ export enum ResultCodeEnum {
     ERROR = 1,
 }
 
-export const api = {
-
-
-
-
-
+export type ResponseType<D = {}, RC = ResultCodeEnum> = {
+    data: D
+    messages: Array<string>
+    resultCode: RC
 }

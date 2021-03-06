@@ -20,7 +20,7 @@ export type Contacts = {
     youtube: string
 }
 
-export type ProfileData = {
+export type ProfileDataType = {
     aboutMe: string
     contacts: Contacts
     fullName: string

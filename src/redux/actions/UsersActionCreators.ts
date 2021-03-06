@@ -94,7 +94,7 @@ export const follow = (id: number) => (dispatch: Dispatch<UsersActionTypes>) => 
     dispatch(followFetchingToggle(id))
 
     usersApi.follow(id).then(res => {
-        if (res.data.resultCode === ResultCodeEnum.SUCCESS) {
+        if (res.resultCode === ResultCodeEnum.SUCCESS) {
             dispatch(followToggle(id))
             dispatch(followFetchingToggle(id))
         }
@@ -105,7 +105,7 @@ export const unFollow = (id: number) => (dispatch: Dispatch<UsersActionTypes>) =
     dispatch(followFetchingToggle(id))
 
     usersApi.unFollow(id).then(res => {
-        if (res.data.resultCode === ResultCodeEnum.SUCCESS) {
+        if (res.resultCode === ResultCodeEnum.SUCCESS) {
             dispatch(followToggle(id))
             dispatch(followFetchingToggle(id))
         }
