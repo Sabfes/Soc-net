@@ -1,6 +1,8 @@
 import {INITIALIZED_SUCCESS} from "./ActionTypes";
 import {authMe} from "./AuthActionCreators";
 
+export type AppActionsTypes = initializedSuccessActionType
+
 type initializedSuccessActionType = {
     type: typeof INITIALIZED_SUCCESS
 }
@@ -11,6 +13,7 @@ export const initializedSuccess = (): initializedSuccessActionType => {
     }
 }
 
+// THUNK
 export const initializeApp = () => async (dispatch: any) => {
     let promise = dispatch(authMe())
 

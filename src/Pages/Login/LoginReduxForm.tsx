@@ -1,12 +1,21 @@
-import {Field, reduxForm} from "redux-form";
-import {Input} from "../../../components/FormControls/FormControls";
-import {maxLengthCreator, requiredField} from "../../../utils/validate/validate";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {Input} from "../../components/FormControls/FormControls";
+import {maxLengthCreator, requiredField} from "../../utils/validate/validate";
+import {FC} from "react";
 
 const maxLength = maxLengthCreator(30)
 
-const LoginForm = (props) => {
+type LoginFormValuesType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    handleSubmit: () => void
+}
+
+const LoginForm: FC<InjectedFormProps<LoginFormValuesType>> = ({error, handleSubmit }) => {
+
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <Field component={Input} validate={[maxLength, requiredField]} name={'email'} placeholder='login'/>
             <Field component={Input} validate={[maxLength, requiredField]} name={'password'} placeholder='password'/>
             <div>
@@ -15,9 +24,9 @@ const LoginForm = (props) => {
             </div>
             <button>login</button>
             {
-                props.error
+                error
                     ?   <div style={{color: 'red', marginTop: '20px', fontSize: '24px'}}>
-                            {props.error}
+                            {error}
                         </div>
                     : null
             }
@@ -25,6 +34,4 @@ const LoginForm = (props) => {
     )
 }
 
-export const LoginReduxForm = reduxForm({
-    form: 'login'
-})(LoginForm)
+export const LoginReduxForm = reduxForm<LoginFormValuesType>({form: 'login'})(LoginForm)

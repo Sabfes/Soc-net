@@ -1,4 +1,5 @@
 import {SET_USER_DATA} from "../actions/ActionTypes";
+import {AuthActionsTypes} from "../actions/AuthActionCreators";
 
 export type initialStateType = {
     userId: number | null,
@@ -16,7 +17,7 @@ const initialState: initialStateType = {
     isAuth: false,
 }
 
-const AuthReducer = (state = initialState, action: any): initialStateType => {
+const AuthReducer = (state = initialState, action: AuthActionsTypes): initialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
