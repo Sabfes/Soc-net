@@ -6,9 +6,9 @@ import {
     SET_USERS,
     SET_USERS_TOTAL_COUNT
 } from "./ActionTypes";
-import {userApi} from "../../api/api";
+import {ResultCodeEnum} from "../../api/api";
+import {usersApi} from "../../api/usersApi";
 import {UserType} from "../../types/types";
-import {AppStateType} from "../redux-store";
 import { Dispatch } from "redux";
 
 export type UsersActionTypes = FollowFetchingToggleType | SetUsersType | ChangeCurrentPageType |
@@ -82,7 +82,7 @@ export const requestUsers = (currentPage: number, pageSize: number) => {
     return (dispatch: Dispatch<UsersActionTypes>) => {
         dispatch(isFetchToggle(true))
 
-        userApi.getUsers(currentPage, pageSize).then(res => {
+        usersApi.getUsers(currentPage, pageSize).then(res => {
             dispatch(setUsers(res.data.items))
             dispatch(setTotalUsersCount(res.data.totalCount))
             dispatch(isFetchToggle(false))
@@ -93,8 +93,8 @@ export const requestUsers = (currentPage: number, pageSize: number) => {
 export const follow = (id: number) => (dispatch: Dispatch<UsersActionTypes>) => {
     dispatch(followFetchingToggle(id))
 
-    userApi.follow(id).then(res => {
-        if (res.data.resultCode === 0) {
+    usersApi.follow(id).then(res => {
+        if (res.data.resultCode === ResultCodeEnum.SUCCESS) {
             dispatch(followToggle(id))
             dispatch(followFetchingToggle(id))
         }
@@ -104,8 +104,8 @@ export const follow = (id: number) => (dispatch: Dispatch<UsersActionTypes>) => 
 export const unFollow = (id: number) => (dispatch: Dispatch<UsersActionTypes>) => {
     dispatch(followFetchingToggle(id))
 
-    userApi.unFollow(id).then(res => {
-        if (res.data.resultCode === 0) {
+    usersApi.unFollow(id).then(res => {
+        if (res.data.resultCode === ResultCodeEnum.SUCCESS) {
             dispatch(followToggle(id))
             dispatch(followFetchingToggle(id))
         }

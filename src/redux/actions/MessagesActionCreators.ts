@@ -1,5 +1,7 @@
 import {ADD_MESSAGE} from "./ActionTypes";
 
+export type MessagesActionsTypes = AddNewMessageActionCreatorType
+
 type AddNewMessageActionCreatorType = {
     type: typeof ADD_MESSAGE
     message: string

@@ -1,4 +1,5 @@
 import {ADD_POST, SAVE_PHOTO_SUCCESS, SET_PROFILE_INFO, SET_PROFILE_STATUS} from "../actions/ActionTypes";
+import {ProfileActionsTypes} from "../actions/ProfileActionCreators";
 
 type InitialStatePostType = {
     id: number
@@ -28,7 +29,7 @@ const initialState: InitialStateType = {
     status: '',
 }
 
-const ProfileReducer = (state = initialState, action: any) => {
+const ProfileReducer = (state = initialState, action: ProfileActionsTypes) => {
     switch (action.type) {
         case SET_PROFILE_STATUS:
             return {
@@ -46,7 +47,7 @@ const ProfileReducer = (state = initialState, action: any) => {
             }
         case SAVE_PHOTO_SUCCESS:
             return {
-                ...state, profileInfo: {...state.profileInfo, img: {...action.photo}}
+                ...state, profileInfo: {...state.profileInfo, img: action.photo}
             }
         default:
             return state

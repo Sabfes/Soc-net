@@ -1,4 +1,5 @@
 import {ADD_MESSAGE} from "../actions/ActionTypes";
+import {MessagesActionsTypes} from "../actions/MessagesActionCreators";
 
 type InitialStateDialogsType = {
     name: string
@@ -24,7 +25,7 @@ const initialState: InitialStateType = {
 }
 
 
-const MessagesReducer = (state = initialState, action: any): InitialStateType => {
+const MessagesReducer = (state = initialState, action: MessagesActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_MESSAGE:
             const msg = {
