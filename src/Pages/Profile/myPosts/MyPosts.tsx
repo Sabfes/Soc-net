@@ -3,7 +3,13 @@ import classes from './MyPosts.module.css'
 import Post from "./Post/Post";
 import {NewPostReduxForm} from "./PostReduxForm/PostReduxForm";
 
-const MyPosts = props => {
+
+type PropsType = {
+    onChange: (data: any) => void
+    posts: Array<{text: string}>
+}
+
+const MyPosts: React.FC<PropsType> = props => {
     return (
         <div className={classes.MyPost}>
             <h1>My posts</h1>
@@ -18,5 +24,4 @@ const MyPosts = props => {
         </div>
     )
 }
-
 export default MyPosts

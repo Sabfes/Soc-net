@@ -9,7 +9,7 @@ export type UserType = {
     photos: PhotosType
     followed?: boolean
 }
-export type Contacts = {
+export type ContactsType = {
     facebook: string
     github: string
     instagram: string
@@ -22,7 +22,7 @@ export type Contacts = {
 
 export type ProfileDataType = {
     aboutMe: string
-    contacts: Contacts
+    contacts: ContactsType
     fullName: string
     lookingForAJob: boolean
     lookingForAJobDescription: string

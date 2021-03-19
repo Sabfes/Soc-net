@@ -1,21 +1,36 @@
-import React, {useState} from 'react'
+import React, {ChangeEvent, useState} from 'react'
 import classes from './ProfileInfo.module.css'
 import {ProfileStatus} from "./ProfileStatus/ProfileStatus"
 import defaultAvatar from '../../../img/avatar-profile.png'
 import {ProfileDataFormRedux} from "./ProfileDataFormRedux/ProfileDataFormRedux"
 import ProfileData from "./ProfileData/ProfileData"
 import Button from "../../../components/Button/Button";
+import {ProfileDataType} from "../../../types/types";
 
-const ProfileInfo = (props) => {
+type PropsType = {
+    savePhoto: (photo: any) => void,
+    updateProfileInfo: (profileInfo: ProfileDataType) => Promise<any>,
+    updateProfileStatus: (status: string) => void,
+
+    profileInfo: any,
+    avatarImg: {
+        large: string,
+        small: string,
+    },
+    isOwner: boolean,
+    desc: string,
+}
+
+const ProfileInfo: React.FC<PropsType> = (props) => {
     const [editMode, setEditMode] = useState(false)
 
-    const onAvatarSelected = (e) => {
-        if (e.target.files.length) {
+    const onAvatarSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.length) {
             props.savePhoto(e.target.files[0])
         }
     }
 
-    const onSubmitHandler = (formData) => {
+    const onSubmit = (formData: any) => {
         props.updateProfileInfo(formData).then(()=> {
             setEditMode(false)
         })
@@ -35,7 +50,11 @@ const ProfileInfo = (props) => {
                     ?   <input type={"file"} onChange={onAvatarSelected}/>
                     :   null
             }
-            <ProfileStatus isOwner={props.isOwner} updateProfileStatus={props.updateProfileStatus} desc={props.desc} />
+            <ProfileStatus
+                isOwner={props.isOwner}
+                updateProfileStatus={props.updateProfileStatus}
+                desc={props.desc}
+            />
 
             {/*Показываем кнопку настройки, если страница - владельца.*/}
             {
@@ -51,7 +70,7 @@ const ProfileInfo = (props) => {
                     ? <ProfileDataFormRedux
                         profileInfo={props.profileInfo}
                         initialValues={props.profileInfo}
-                        onSubmit={onSubmitHandler}
+                        onSubmit={onSubmit}
                     />
                     : <ProfileData
                         profileInfo={props.profileInfo}
@@ -60,5 +79,4 @@ const ProfileInfo = (props) => {
         </div>
     )
 }
-
 export default ProfileInfo

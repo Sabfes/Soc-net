@@ -14,7 +14,7 @@ type InitialStateType = {
         small: string
         large: string
     }
-    status: string
+    status: string,
 }
 
 const initialState: InitialStateType = {

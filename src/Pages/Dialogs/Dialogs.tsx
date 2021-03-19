@@ -10,24 +10,16 @@ import {compose} from "redux";
 import {AddMsgFormRedux} from "./MsgFormRedux/MsgFormRedux";
 import {AppStateType} from "../../redux/redux-store";
 
-type DialogType = {
-    name: string
-    id: number
-}
-
-type MessagesType = {
-    name: string
-    text: string
-}
-
 type PropsTypes = {
     isAuth: boolean
-    addNewMessageActionCreator: (newMessage: string) => void
-    dialogs: Array<DialogType>
-    messages: Array<MessagesType>
 }
 
-const Dialogs: React.FC<PropsTypes> = ({isAuth, messages,dialogs,addNewMessageActionCreator}) => {
+type MapStateToProps = ReturnType<typeof mapStateToProps>
+type MapDispatchToProps = {
+    addNewMessageActionCreator: (newMsg: String) => void
+}
+
+const Dialogs: React.FC<MapStateToProps & MapDispatchToProps & PropsTypes> = ({isAuth, messages,dialogs,addNewMessageActionCreator}) => {
     const addNewMsg = (s: any): void => {
         addNewMessageActionCreator(s.newMsg)
     }
@@ -76,4 +68,4 @@ function mapStateToProps(state: AppStateType) {
 export default compose(
     connect(mapStateToProps, {addNewMessageActionCreator}),
     withAuthRedirect,
-)(Dialogs)
+)(Dialogs) as React.ComponentType

@@ -1,7 +1,7 @@
+import React from 'react'
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../../components/FormControls/FormControls";
 import {maxLengthCreator, requiredField} from "../../utils/validate/validate";
-import {FC} from "react";
 
 const maxLength = maxLengthCreator(30)
 
@@ -12,7 +12,7 @@ type LoginFormValuesType = {
     handleSubmit: () => void
 }
 
-const LoginForm: FC<InjectedFormProps<LoginFormValuesType>> = ({error, handleSubmit }) => {
+const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType>> = ({error, handleSubmit }) => {
 
     return (
         <form onSubmit={handleSubmit}>

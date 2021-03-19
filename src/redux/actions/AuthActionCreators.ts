@@ -46,10 +46,8 @@ export const LoginUser = (
 ) => async (dispatch: any) => {
     let res = await authApi.login(email, login, rememberMe)
     if (res.resultCode === ResultCodeEnum.SUCCESS) {
-        console.log('norm')
         dispatch(authMe())
     } else {
-        console.log('stop')
         const msg = res.messages.length > 0 ? res.messages[0] : 'Some error'
         dispatch(stopSubmit('login', {_error: msg}))
     }

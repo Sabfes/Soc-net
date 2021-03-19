@@ -1,7 +1,11 @@
 import React from 'react'
 import classes from './Post.module.css'
 
-const Post = props => {
+type PropsTypes = {
+    text: String
+}
+
+const Post: React.FC<PropsTypes> = props => {
     return (
         <div className={classes.Container}>
             <div className={classes.Post}>
