@@ -2,7 +2,11 @@ import React from "react";
 import classes from "./ProfileData.module.css";
 import Contact from "../Contacts/Contact";
 
-const ProfileData = ({profileInfo}) => {
+type PropsTypes = {
+    profileInfo: any
+}
+
+const ProfileData: React.FC<PropsTypes> = ({profileInfo}) => {
     return (
         <div className={classes.ProfileData}>
             {/*Описание профиля*/}

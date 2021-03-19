@@ -10,13 +10,21 @@ import Settings from "./Pages/Settings/Settings";
 import Users from "./Pages/Users/Users";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./Pages/Login/Login";
-import {Component} from "react";
+import {Component, ComponentType} from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/actions/AppActionCreator";
 import Loader from "./components/Loader/Loader";
+import {AppStateType} from "./redux/redux-store";
 
-class App extends Component {
+
+type MapStateToPropsType = ReturnType<typeof mapStateToProps>
+type MapDispatchToPropsType = {
+    initializeApp: () => void
+}
+type PropsTypes = MapDispatchToPropsType & MapStateToPropsType
+
+class App extends Component<PropsTypes> {
     componentDidMount() {
         this.props.initializeApp()
     }
@@ -25,11 +33,10 @@ class App extends Component {
         if (!this.props.initialized) {
             return <Loader/>
         }
-
         return (
             <div className="App-wrapper">
                 <HeaderContainer/>
-                <Navbar/>
+                <Navbar userId={null}/>
 
                 <Switch>
                     <Route path={'/profile/:id?'} exact={true} render={() => <Profile/>}/>
@@ -49,13 +56,13 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: AppStateType) => {
     return {
         initialized: state.app.initialized,
     }
 }
 
-export default compose(
+export default compose<ComponentType>(
     withRouter,
     connect(mapStateToProps, {initializeApp}),
 )(App);

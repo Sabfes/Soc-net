@@ -4,11 +4,9 @@ import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 
-type PropsType = {
-    userId: number
-}
+type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 
-const Navbar: React.FC<PropsType> = ({userId}) => {
+const Navbar: React.FC<MapStateToPropsType> = ({userId}) => {
     return (
         <nav className={classes.Navbar}>
             <NavLink

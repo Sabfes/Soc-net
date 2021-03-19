@@ -1,13 +1,20 @@
+import React from 'react'
 import {maxLengthCreator, requiredField} from "../../../../utils/validate/validate";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import classes from "../MyPosts.module.css";
 import {TextArea} from "../../../../components/FormControls/FormControls";
 
 const maxLength = maxLengthCreator(10)
 
-const newPostForm = props => {
+
+type newPostValueType = {
+    newPostText: string,
+    handleSubmit: () => void,
+}
+
+const newPostForm: React.FC<InjectedFormProps<newPostValueType>> = ({handleSubmit}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <Field
                 placeholder={'Post message'}
                 className={classes.MyPost__textarea}
@@ -20,6 +27,6 @@ const newPostForm = props => {
     )
 }
 
-export const NewPostReduxForm = reduxForm({
+export const NewPostReduxForm = reduxForm<newPostValueType>({
     form: 'ProfileNewPostForm'
 })(newPostForm)
