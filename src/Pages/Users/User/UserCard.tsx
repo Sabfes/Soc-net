@@ -39,9 +39,7 @@ const UserCard: React.FC<PropsTypes> =
                             ? <button
                                 disabled={btnDisabledIdArray.some(i => i === id) ? true : false}
                                 id={id.toString()}
-                                onClick={() => {
-                                    unFollow(id)
-                                }}
+                                onClick={() => unFollow(id)}
                                 className={classes.UserCard__button}
                             >
                                 {"UNFOLLOW"}
