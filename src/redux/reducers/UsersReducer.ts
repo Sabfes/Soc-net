@@ -1,13 +1,12 @@
 import {
     CHANGE_CURRENT_PAGE, FOLLOW_FETCHING_TOGGLE,
     FOLLOW_TOGGLE,
-    IS_FETCH_TOGGLE,
+    IS_FETCH_TOGGLE, SET_FILTERS,
     SET_USERS,
     SET_USERS_TOTAL_COUNT
 } from "../actions/ActionTypes";
 import {UserType} from "../../types/types";
 import {UsersActionTypes} from "../actions/UsersActionCreators";
-
 
 type InitialStateType = {
     users: Array<UserType>,
@@ -16,7 +15,12 @@ type InitialStateType = {
     currentPage: number,
     isFetch: boolean,
     followFetchingId: Array<number>,
+    filter: {
+        term: string,
+        friend: null | boolean
+    }
 }
+
 const initialState: InitialStateType = {
     users: [],
     pageSize: 100,
@@ -24,6 +28,10 @@ const initialState: InitialStateType = {
     currentPage: 1,
     isFetch: false,
     followFetchingId: [],
+    filter: {
+        term: '',
+        friend: null as null | boolean
+    }
 }
 
 const UsersReducer = (state = initialState, action: UsersActionTypes) => {
@@ -64,11 +72,21 @@ const UsersReducer = (state = initialState, action: UsersActionTypes) => {
             return {
                 ...state, followFetchingId: res,
             }
+        case SET_FILTERS:
+            return {
+                ...state,
+                filter: {
+                    ...state.filter,
+                    term: action.filter.term,
+                    friend: action.filter.friend
+                }
+            }
         default:
             return state
     }
 }
-
+// export type initialState = typeof initialState
+export type FilterType = typeof initialState.filter
 export default UsersReducer
 
 

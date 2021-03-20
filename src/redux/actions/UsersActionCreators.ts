@@ -3,16 +3,18 @@ import {
     FOLLOW_FETCHING_TOGGLE,
     FOLLOW_TOGGLE,
     IS_FETCH_TOGGLE,
+    SET_FILTERS,
     SET_USERS,
     SET_USERS_TOTAL_COUNT
 } from "./ActionTypes";
 import {ResultCodeEnum} from "../../api/api";
 import {usersApi} from "../../api/usersApi";
 import {UserType} from "../../types/types";
-import { Dispatch } from "redux";
+import {Dispatch} from "redux";
+import {FilterType} from "../reducers/UsersReducer";
 
 export type UsersActionTypes = FollowFetchingToggleType | SetUsersType | ChangeCurrentPageType |
-    SetTotalUsersCountType | IsFetchToggleType | FollowToggleType
+    SetTotalUsersCountType | IsFetchToggleType | FollowToggleType | SetFilterType
 
 // ACTION CREATORS
 type FollowToggleType = {
@@ -77,12 +79,25 @@ export const followFetchingToggle = (id: number): FollowFetchingToggleType => {
     }
 }
 
-// THUNK CREATORS
-export const requestUsers = (currentPage: number, pageSize: number) => {
-    return (dispatch: Dispatch<UsersActionTypes>) => {
-        dispatch(isFetchToggle(true))
+type SetFilterType = {
+    type: typeof SET_FILTERS
+    filter: FilterType
+}
 
-        usersApi.getUsers(currentPage, pageSize).then(res => {
+export const setFilter = (filter: FilterType): SetFilterType => {
+    return {
+        type: SET_FILTERS, filter
+    }
+}
+
+// THUNK CREATORS
+export const requestUsers = (currentPage: number, pageSize: number, filter: FilterType) => {
+    return async (dispatch: Dispatch<UsersActionTypes>) => {
+        dispatch(isFetchToggle(true))
+        dispatch(changeCurrentPage(currentPage))
+        dispatch(setFilter(filter))
+
+        await usersApi.getUsers(currentPage, pageSize, filter.term, filter.friend).then(res => {
             dispatch(setUsers(res.data.items))
             dispatch(setTotalUsersCount(res.data.totalCount))
             dispatch(isFetchToggle(false))

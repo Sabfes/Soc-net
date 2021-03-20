@@ -4,8 +4,8 @@ import {ProfileStatus} from "./ProfileStatus/ProfileStatus"
 import defaultAvatar from '../../../img/avatar-profile.png'
 import {ProfileDataFormRedux} from "./ProfileDataFormRedux/ProfileDataFormRedux"
 import ProfileData from "./ProfileData/ProfileData"
-import Button from "../../../components/Button/Button";
-import {ProfileDataType} from "../../../types/types";
+import Button from "../../../components/Button/Button"
+import {ProfileDataType} from "../../../types/types"
 
 type PropsType = {
     savePhoto: (photo: any) => void,
@@ -31,7 +31,7 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
     }
 
     const onSubmit = (formData: any) => {
-        props.updateProfileInfo(formData).then(()=> {
+        props.updateProfileInfo(formData).then(() => {
             setEditMode(false)
         })
     }
@@ -47,8 +47,8 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
             {/*Показываем кнопку загрузки фотографии, если страница - владельца.*/}
             {
                 props.isOwner
-                    ?   <input type={"file"} onChange={onAvatarSelected}/>
-                    :   null
+                    ? <input type={"file"} onChange={onAvatarSelected}/>
+                    : null
             }
             <ProfileStatus
                 isOwner={props.isOwner}
@@ -59,8 +59,10 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
             {/*Показываем кнопку настройки, если страница - владельца.*/}
             {
                 props.isOwner && !editMode
-                    ? <Button onClick={ ()=> {setEditMode(true)} }
-                        value={'edit'}
+                    ? <Button onClick={() => {
+                        setEditMode(true)
+                    }}
+                              value={'edit'}
                     />
                     : null
             }

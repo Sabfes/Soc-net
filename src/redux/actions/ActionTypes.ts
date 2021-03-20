@@ -19,6 +19,7 @@ export const CHANGE_CURRENT_PAGE = 'users/CHANGE_CURRENT_PAGE'
 export const SET_USERS_TOTAL_COUNT = 'users/SET_USERS_TOTAL_COUNT'
 export const IS_FETCH_TOGGLE = 'users/IS_FETCH_TOGGLE'
 export const FOLLOW_FETCHING_TOGGLE = 'users/FOLLOW_FETCHING_TOGGLE'
+export const SET_FILTERS = 'users/SET_FILTERS'
 
 //Auth
 export const SET_USER_DATA = 'auth/SET_USER_DATA'

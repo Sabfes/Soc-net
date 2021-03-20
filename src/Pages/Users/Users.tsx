@@ -10,7 +10,10 @@ import {
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import Loader from "../../components/Loader/Loader";
 import {UserType} from "../../types/types";
-import {AppStateType} from "../../redux/redux-store";
+// import {AppStateType} from "../../redux/redux-store";
+import UsersSearchForm from "./UsersSearchForm/UsersSearchForm";
+import {FilterType} from "../../redux/reducers/UsersReducer";
+// import App from "../../App";
 
 type MapStatePropsTypes = {
     currentPage: number
@@ -19,11 +22,12 @@ type MapStatePropsTypes = {
     totalUsersCount: number
     pageSize: number
     followFetchingId: Array<number>
+    filter: FilterType
 }
 
 type MapDispatchPropsTypes = {
     changeCurrentPage: (id: number) => void
-    requestUsers: (id: number, pageSize: number) => void
+    requestUsers: (id: number, pageSize: number, filter: FilterType) => void
     unFollow: () => void
     follow: () => void
     followFetchingToggle: () => void
@@ -33,12 +37,18 @@ type PropsTypes = MapStatePropsTypes & MapDispatchPropsTypes
 
 class Users extends React.Component<PropsTypes> {
     componentDidMount() {
-        this.props.requestUsers(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize, filter} = this.props
+        this.props.requestUsers(currentPage, pageSize, filter)
     }
 
     onChangePage = (e: { target: HTMLInputElement }): void => {
-        this.props.changeCurrentPage(+e.target.id)
-        this.props.requestUsers(+e.target.id, this.props.pageSize)
+        const {filter, pageSize} = this.props
+        this.props.requestUsers(+e.target.id, pageSize, filter)
+    }
+
+    onFilterChange = (filter: FilterType) => {
+        const {pageSize} = this.props
+        this.props.requestUsers(1, pageSize, filter)
     }
 
     render() {
@@ -52,6 +62,8 @@ class Users extends React.Component<PropsTypes> {
         return (
             <div className={classes.Users}>
                 <h1>users</h1>
+
+                <UsersSearchForm onFilterChanged={this.onFilterChange}/>
 
                 <Paginator
                     pages={pages}
@@ -86,7 +98,7 @@ class Users extends React.Component<PropsTypes> {
     }
 }
 
-function mapStateToProps(state: AppStateType): MapStatePropsTypes {
+function mapStateToProps(state: any): MapStatePropsTypes {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
@@ -94,6 +106,7 @@ function mapStateToProps(state: AppStateType): MapStatePropsTypes {
         currentPage: state.usersPage.currentPage,
         isFetch: state.usersPage.isFetch,
         followFetchingId: state.usersPage.followFetchingId,
+        filter: state.usersPage.filter,
     }
 }
 
