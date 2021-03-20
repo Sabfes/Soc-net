@@ -1,15 +1,7 @@
-.Header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid black;
-    grid-area: header;
-    padding: 14px;
-}
-
 .Header__logo {
-    color: black;
-    font-size: 20px;
+    color: white;
+    margin-left: 20px;
+    font-size: 14px;
 }
 
 .Header__logo:hover {

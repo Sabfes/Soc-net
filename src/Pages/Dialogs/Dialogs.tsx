@@ -51,7 +51,6 @@ const Dialogs: React.FC<MapStateToProps & MapDispatchToProps & PropsTypes> = ({i
 
                     <AddMsgFormRedux onSubmit={addNewMsg}/>
                 </div>
-
             </div>
         </div>
     )

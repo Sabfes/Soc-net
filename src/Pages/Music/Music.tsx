@@ -2,6 +2,7 @@ import React from 'react'
 import classes from './Music.module.css'
 // @ts-ignore
 import audioTest from '../../audio/audio-boyka.mp3'
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 const Music: React.FC = () => {
     const audioPlayHandler = (e: any): void => {
@@ -22,4 +23,4 @@ const Music: React.FC = () => {
     )
 }
 
-export default Music
+export default withAuthRedirect(Music)
