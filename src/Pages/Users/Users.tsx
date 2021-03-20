@@ -1,122 +1,108 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import classes from './Users.module.css'
-import {connect} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import UserCard from "./User/UserCard";
 import Paginator from "./Paginator/Paginator"
 import {
-    changeCurrentPage, follow, followFetchingToggle,
-    requestUsers, unFollow,
+    changeCurrentPage,
+    follow,
+    followFetchingToggle,
+    requestUsers,
+    unFollow,
 } from "../../redux/actions/UsersActionCreators";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import Loader from "../../components/Loader/Loader";
-import {UserType} from "../../types/types";
-// import {AppStateType} from "../../redux/redux-store";
 import UsersSearchForm from "./UsersSearchForm/UsersSearchForm";
 import {FilterType} from "../../redux/reducers/UsersReducer";
-// import App from "../../App";
+import {AppStateType} from "../../redux/redux-store";
 
-type MapStatePropsTypes = {
-    currentPage: number
-    users: Array<UserType>
-    isFetch: boolean
-    totalUsersCount: number
-    pageSize: number
-    followFetchingId: Array<number>
-    filter: FilterType
-}
 
 type MapDispatchPropsTypes = {
     changeCurrentPage: (id: number) => void
-    requestUsers: (id: number, pageSize: number, filter: FilterType) => void
-    unFollow: () => void
-    follow: () => void
     followFetchingToggle: () => void
 }
 
-type PropsTypes = MapStatePropsTypes & MapDispatchPropsTypes
+type PropsTypes = MapDispatchPropsTypes
 
-class Users extends React.Component<PropsTypes> {
-    componentDidMount() {
-        const {currentPage, pageSize, filter} = this.props
-        this.props.requestUsers(currentPage, pageSize, filter)
+const Users: React.FC<PropsTypes> = (props) => {
+    const totalUsersCount = useSelector((state: AppStateType) => state.usersPage.totalUsersCount)
+    const currentPage = useSelector((state: AppStateType) => state.usersPage.currentPage)
+    const pageSize = useSelector((state: AppStateType) => state.usersPage.pageSize)
+    const filter = useSelector((state: AppStateType) => state.usersPage.filter)
+    const followFetchingId = useSelector((state: AppStateType) => state.usersPage.followFetchingId)
+    const isFetch = useSelector((state: AppStateType) => state.usersPage.isFetch)
+    const users = useSelector((state: AppStateType) => state.usersPage.users)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(requestUsers(currentPage, pageSize, filter))
+    }, [])
+
+    const onChangePage = (e: { target: HTMLInputElement }): void => {
+        dispatch(requestUsers(+e.target.id, pageSize, filter))
     }
 
-    onChangePage = (e: { target: HTMLInputElement }): void => {
-        const {filter, pageSize} = this.props
-        this.props.requestUsers(+e.target.id, pageSize, filter)
+    const onFilterChange = (filter: FilterType) => {
+        dispatch(requestUsers(1, pageSize, filter))
     }
 
-    onFilterChange = (filter: FilterType) => {
-        const {pageSize} = this.props
-        this.props.requestUsers(1, pageSize, filter)
+    const unFollowHandler = (userId: number) => {
+        dispatch(unFollow(userId))
+    }
+    const followHandler = (userId: number) => {
+        dispatch(follow(userId))
     }
 
-    render() {
-        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
+    let pagesCount = Math.ceil(totalUsersCount / pageSize);
 
-        let pages = []
-        for (let i=1; i<=pagesCount; i++) {
-            pages.push(i)
-        }
+    let pages = []
+    for (let i=1; i<=pagesCount; i++) {
+        pages.push(i)
+    }
 
-        return (
-            <div className={classes.Users}>
-                <h1>users</h1>
+    return (
+        <div className={classes.Users}>
+            <h1>users</h1>
 
-                <UsersSearchForm onFilterChanged={this.onFilterChange}/>
+            <UsersSearchForm onFilterChanged={onFilterChange}/>
 
-                <Paginator
-                    pages={pages}
-                    changePage={this.onChangePage}
-                    currentPage={this.props.currentPage}
-                />
+            <Paginator
+                pages={pages}
+                changePage={onChangePage}
+                currentPage={currentPage}
+            />
 
-                <div className={classes.Users__container}>
-                    {
-                        this.props.isFetch ? <Loader /> : null
-                    }
-                    {
-                        this.props.isFetch
-                            ? null
-                            : this.props.users.map( (u,i)=>{
-                                return (<UserCard
-                                    key={i}
-                                    id={u.id}
-                                    name={u.name}
-                                    status={u.status}
-                                    isFollow={u.followed}
-                                    imgUrl={u.photos.small}
-                                    btnDisabledIdArray={this.props.followFetchingId}
-                                    follow={this.props.follow}
-                                    unFollow={this.props.unFollow}
-                                />)
-                        })
-                    }
-                </div>
+            <div className={classes.Users__container}>
+                {
+                    isFetch ? <Loader /> : null
+                }
+                {
+                    isFetch
+                        ? null
+                        : users.map( (u: any,i: number)=>{
+                            return (<UserCard
+                                key={i}
+                                id={u.id}
+                                name={u.name}
+                                status={u.status}
+                                isFollow={u.followed}
+                                imgUrl={u.photos.small}
+                                btnDisabledIdArray={followFetchingId}
+                                follow={followHandler}
+                                unFollow={unFollowHandler}
+                            />)
+                    })
+                }
             </div>
-        )
-    }
+        </div>
+    )
 }
 
-function mapStateToProps(state: any): MapStatePropsTypes {
-    return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetch: state.usersPage.isFetch,
-        followFetchingId: state.usersPage.followFetchingId,
-        filter: state.usersPage.filter,
-    }
-}
-
-export default connect(mapStateToProps,
+export default connect(null,
     {
         changeCurrentPage,
-        requestUsers,
         followFetchingToggle,
-        follow,
-        unFollow
     }
 )(withAuthRedirect(Users))
 
