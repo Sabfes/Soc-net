@@ -15,6 +15,8 @@ import Loader from "../../components/Loader/Loader";
 import UsersSearchForm from "./UsersSearchForm/UsersSearchForm";
 import {FilterType} from "../../redux/reducers/UsersReducer";
 import {AppStateType} from "../../redux/redux-store";
+import { useHistory } from 'react-router-dom';
+import * as queryString from "querystring";
 
 
 type MapDispatchPropsTypes = {
@@ -34,10 +36,44 @@ const Users: React.FC<PropsTypes> = (props) => {
     const users = useSelector((state: AppStateType) => state.usersPage.users)
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     useEffect(() => {
-        dispatch(requestUsers(currentPage, pageSize, filter))
+        const parsed = queryString.parse(history.location.search.substr(1))
+
+        let actualPage = currentPage
+        let actualFilter = filter
+
+        if (!!parsed.page) actualPage = Number(parsed.page)
+        if (!!parsed.term) actualFilter = {...actualFilter, term: parsed.term as string}
+
+        switch (parsed.friend) {
+            case 'null':
+                actualFilter = {...actualFilter, friend: null}
+                break
+            case 'true':
+                actualFilter = {...actualFilter, friend: true}
+                break
+            case 'false':
+                actualFilter = {...actualFilter, friend: false}
+                break
+
+        }
+
+        dispatch(requestUsers(actualPage, pageSize, actualFilter))
     }, [])
+
+    useEffect(()=> {
+        const query: any = {}
+        if (!!filter.term) query.term = filter.term
+        if (filter.friend !== null ) query.friend = String(filter.friend)
+        if (currentPage !== 1) query.page = String(currentPage)
+
+        history.push({
+            pathname: '/users',
+            search: queryString.stringify(query)
+        })
+    }, [filter, currentPage, history])
 
     const onChangePage = (e: { target: HTMLInputElement }): void => {
         dispatch(requestUsers(+e.target.id, pageSize, filter))
@@ -105,7 +141,5 @@ export default connect(null,
         followFetchingToggle,
     }
 )(withAuthRedirect(Users))
-
-
 
 

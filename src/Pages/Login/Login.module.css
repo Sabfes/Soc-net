@@ -1,16 +1,11 @@
 .Login {
-    border-left: 1px solid black;
     display: flex;
+    margin-top: 200px;
     justify-content: center;
     align-items: center;
-    width: 100%;
     box-sizing: border-box;
-    height: calc(100vh - 60px);
 }
 .Login__content {
-    border: 1px solid black;
-    width: 450px;
-    height: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
