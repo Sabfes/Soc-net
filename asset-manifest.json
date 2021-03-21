@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/Soc-net/static/css/main.94e42083.chunk.css",
-    "main.js": "/Soc-net/static/js/main.d4145355.chunk.js",
-    "main.js.map": "/Soc-net/static/js/main.d4145355.chunk.js.map",
+    "main.css": "/Soc-net/static/css/main.275bdf2b.chunk.css",
+    "main.js": "/Soc-net/static/js/main.8310699f.chunk.js",
+    "main.js.map": "/Soc-net/static/js/main.8310699f.chunk.js.map",
     "runtime-main.js": "/Soc-net/static/js/runtime-main.6c9787c9.js",
     "runtime-main.js.map": "/Soc-net/static/js/runtime-main.6c9787c9.js.map",
     "static/css/2.98e7ac70.chunk.css": "/Soc-net/static/css/2.98e7ac70.chunk.css",
@@ -12,7 +12,7 @@
     "static/js/3.2cdb78eb.chunk.js.map": "/Soc-net/static/js/3.2cdb78eb.chunk.js.map",
     "index.html": "/Soc-net/index.html",
     "static/css/2.98e7ac70.chunk.css.map": "/Soc-net/static/css/2.98e7ac70.chunk.css.map",
-    "static/css/main.94e42083.chunk.css.map": "/Soc-net/static/css/main.94e42083.chunk.css.map",
+    "static/css/main.275bdf2b.chunk.css.map": "/Soc-net/static/css/main.275bdf2b.chunk.css.map",
     "static/js/2.1f059556.chunk.js.LICENSE.txt": "/Soc-net/static/js/2.1f059556.chunk.js.LICENSE.txt",
     "static/media/audio-boyka.dea5dbfe.mp3": "/Soc-net/static/media/audio-boyka.dea5dbfe.mp3",
     "static/media/avatar-profile.2d4393d1.png": "/Soc-net/static/media/avatar-profile.2d4393d1.png"
@@ -21,7 +21,7 @@
     "static/js/runtime-main.6c9787c9.js",
     "static/css/2.98e7ac70.chunk.css",
     "static/js/2.1f059556.chunk.js",
-    "static/css/main.94e42083.chunk.css",
-    "static/js/main.d4145355.chunk.js"
+    "static/css/main.275bdf2b.chunk.css",
+    "static/js/main.8310699f.chunk.js"
   ]
 }
