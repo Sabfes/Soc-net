@@ -1,0 +1,13 @@
+.ProfileInfo {
+    grid-area: content;
+}
+
+.ProfileInfo__background {
+    width: 100%;
+    height: 250px;
+}
+
+.PostContainer {
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,7 @@
+.ProfileStatus {
+    font-size: 20px;
+    cursor: pointer;
+}
+.ProfileStatus_status {
+    color: cornflowerblue;
+}

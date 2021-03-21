@@ -1,0 +1,11 @@
+.DialogItem {
+    text-decoration: none;
+    color: black;
+}
+.DialogItem:hover {
+    color: lightgrey;
+}
+
+.DialogsItemActive {
+    color: lightgrey;
+}

@@ -1,0 +1,26 @@
+.Dialogs {
+    grid-area: content;
+}
+
+.Dialogs__container {
+    display: flex;
+}
+
+.Dialogs__lists {
+    border-right: 1px solid lightgrey;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.Dialogs__textarea {
+    resize: none;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.Dialogs__messages {
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+}

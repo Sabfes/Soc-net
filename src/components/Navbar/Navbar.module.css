@@ -1,0 +1,22 @@
+.Navbar {
+    grid-area: nav;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.Navbar__link {
+    text-decoration: none;
+    margin-top: 5px;
+    font-size: 24px;
+    color: black;
+}
+
+.Navbar__link:hover {
+    color: lightgrey;
+    cursor: pointer;
+}
+
+.Navbar__linkActive {
+    color: lightgrey;
+}

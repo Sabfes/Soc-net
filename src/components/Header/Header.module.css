@@ -1,0 +1,14 @@
+.Header__logo {
+    color: white;
+    margin-left: 20px;
+    font-size: 14px;
+}
+
+.Header__logo:hover {
+    cursor: pointer;
+}
+
+.Header__login {
+    text-decoration: none;
+    color: black;
+}

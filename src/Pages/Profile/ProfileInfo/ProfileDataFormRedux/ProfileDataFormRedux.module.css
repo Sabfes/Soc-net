@@ -1,0 +1,10 @@
+.MainInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.MainInfo__job {
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+}

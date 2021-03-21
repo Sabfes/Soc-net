@@ -1,0 +1,19 @@
+.ProfileData {
+
+}
+.ProfileData__inputInfo {
+    color: cornflowerblue;
+}
+
+.ProfileData__info {
+    font-size: 20px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.ProfileData__contacts {
+    margin-top: 20px;
+    font-size: 25px;
+    display: flex;
+    flex-direction: column;
+}
