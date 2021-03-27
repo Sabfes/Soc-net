@@ -14,4 +14,6 @@ npm run start
 
 ![Функционал приложения](socnet.gif)
 
-###[DEMO version](https://sabfes.github.io/wgg-test-task/)
+###[DEMO version](https://sabfes.github.io/Soc-net/) 
+login: jd.acemen@gmail.com
+pass: 12345678
