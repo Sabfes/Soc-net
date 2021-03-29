@@ -1,13 +1,11 @@
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./Pages/Profile/Profile";
-import Dialogs from "./Pages/Dialogs/Dialogs";
 import {Route, Switch, withRouter} from "react-router-dom";
 // import {Redirect} from "react-router-dom"
 import News from "./Pages/News/News";
 import Music from "./Pages/Music/Music";
 import Settings from "./Pages/Settings/Settings";
-import Users from "./Pages/Users/Users";
 import Login from "./Pages/Login/Login";
 import React, {Component, ComponentType} from "react";
 import {connect} from "react-redux";
@@ -19,8 +17,15 @@ import 'antd/dist/antd.css'
 import {Layout} from 'antd';
 import {AppHeader} from "./components/Header/Header";
 import {Footer} from "antd/es/layout/layout";
+import {withSuspense} from "./hoc/withSuspense";
 
 const {Content, Sider } = Layout;
+const DialogsLazy = React.lazy(() => import('./Pages/Dialogs/Dialogs'))
+const UsersLazy = React.lazy(() => import('./Pages/Users/Users'))
+const ChatPageLazy = React.lazy( () => import("./Pages/ChatPage/ChatPage"))
+const SuspenseDialogs = withSuspense(DialogsLazy)
+const SuspenseUsers = withSuspense(UsersLazy)
+const SuspenseChatPage = withSuspense(ChatPageLazy)
 
 
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
@@ -59,12 +64,13 @@ class App extends Component<PropsTypes> {
                         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                              <Switch>
                                  <Route path={'/profile/:id?'} exact={true} render={() => <Profile/>}/>
-                                 <Route path={'/dialogs'} render={() => <Dialogs/>}/>
-                                 <Route path={'/users'} render={() => <Users/>}/>
+                                 <Route path={'/dialogs'} render={() => <SuspenseDialogs/>}/>
+                                 <Route path={'/users'} render={() => <SuspenseUsers />}/>
                                  <Route path={'/news'} component={News}/>
                                  <Route path={'/music'} component={Music}/>
                                  <Route path={'/settings'} component={Settings}/>
                                  <Route path={'/login'} component={Login}/>
+                                 <Route path={'/chat'} component={SuspenseChatPage}/>
                                  <Route path={'/'} render={() => <div> Home Page :3</div>}/>
                                  {/*Редирект на профиль.*/}
                                  {/*<Route path={'/'} render={ ()=> <Redirect to={'/profile'} /> }/>*/}

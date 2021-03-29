@@ -65,6 +65,15 @@ const Navbar: React.FC<MapStateToPropsType> = ({userId}) => {
                     Settings
                 </NavLink>
             </Menu.Item>
+            <Menu.Item key="7" icon={<SettingOutlined  />}>
+                <NavLink
+                    className={classes.Navbar__link}
+                    to={'/chat'}
+                    activeClassName={classes.Navbar__linkActive}
+                >
+                    chat
+                </NavLink>
+            </Menu.Item>
         </Menu>
     )
 }
