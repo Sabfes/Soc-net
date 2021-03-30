@@ -27,3 +27,7 @@ export const IS_AUTH_TOGGLE = 'auth/IS_AUTH_TOGGLE'
 
 //APP
 export const INITIALIZED_SUCCESS = 'app/INITIALIZED_SUCCESS'
+
+//CHAT
+export const MESSAGES_RECEIVED = 'chat/MESSAGES_RECEIVED'
+export const STATUS_CHANGE = 'chat/STATUS_CHANGE'
