@@ -6,6 +6,7 @@ import AuthReducer from "./reducers/AuthReducer";
 import thunk from "redux-thunk";
 import AppReducer from "./reducers/AppReducer";
 import {reducer as formReducer} from "redux-form";
+import ChatReducer from "./reducers/ChatReducer";
 
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     auth: AuthReducer,
     app: AppReducer,
     form: formReducer,
+    chat: ChatReducer,
 })
 
 type RootReducerType = typeof rootReducer
